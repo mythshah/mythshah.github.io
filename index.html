@@ -110,7 +110,7 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 /* A set of clips (e.g. a lookbook): a row of 9:16 clips that scrolls sideways inside the stage. */
 .stage.set { grid-template-columns: minmax(0, 1040px); }
 .clipset { grid-area: pic; display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
-.clip { flex: 0 0 auto; height: clamp(300px, calc(100vh - 400px), 620px); aspect-ratio: 9 / 16; position: relative; scroll-snap-align: start; background: #000; border: 0; padding: 0; cursor: pointer; overflow: hidden; }
+.clip { flex: 0 0 auto; height: clamp(300px, calc(100vh - 400px), 620px); aspect-ratio: var(--clip-ar, 9 / 16); position: relative; scroll-snap-align: start; background: #000; border: 0; padding: 0; cursor: pointer; overflow: hidden; }
 .clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .clip .n { position: absolute; left: 8px; top: 8px; font: 400 10px var(--type); letter-spacing: .1em; color: #f3eedd; padding: 3px 6px; background: rgba(20,18,14,.55); }
 .clip .snd { position: absolute; right: 8px; bottom: 8px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: rgba(20,18,14,.55); color: #f3eedd; }
@@ -120,6 +120,8 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 .clip.sound .snd .on { display: block; }
 .clip.sound .snd .off { display: none; }
 .set-hint { margin-top: 2px; }
+/* Landscape sets (e.g. 4:3 documentary clips) size by width so they never overflow a phone screen. */
+.clipset.landscape .clip { height: auto; width: min(100%, max(320px, calc((100vh - 400px) * var(--clip-ar))), 830px); }
 .stage-foot { grid-area: foot; display: flex; justify-content: space-between; align-items: baseline; gap: 12px 24px; flex-wrap: wrap; margin-top: 16px; }
 .links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .ico { width: 40px; height: 40px; border-radius: 50%; display: inline-grid; place-items: center; border: 1px solid var(--rule); background: none; color: var(--ink); cursor: pointer; padding: 0; transition: border-color .25s, background .25s, color .25s, transform .25s var(--ease); }
@@ -355,6 +357,14 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 /* Placeholder projects: replace titles, clients, links and stills with your own.
    tone = the muted page colour shown while that project is on screen. */
 const projects = [
+  { t: "Planning & Housing", c: "Landworkers' Alliance", type: "doc", y: "2026", date: "2026-11-07", tone: "#3d4630",
+    rt: "1:29", ar: 4 / 3, clipAr: 4 / 3,
+    /* A set: add more films to this list as media/lwa/lwa2, lwa3 … */
+    clips: ["media/lwa/lwa1"],
+    video: "media/lwa/lwa1.mp4", poster: "media/lwa/lwa1.jpg",
+    d: "A short campaign film for the Landworkers' Alliance. Agroecological farms and local food webs are resilient in the face of climate breakdown, but new entrant landworkers need to be able to live on their land, and many face an uphill battle for planning permission. As councils across England revise their Local Plans, the campaign urges them to make clear provision for small farms, growers and the homes they need on site.",
+    credits: "Filmmaker Jack Tierney, with the help of Myth Shah and Rudi Thwiates",
+    g: "#22281c" },
   { t: "Seoul, Reset Asia Tour", c: "Haruna", type: "music", rt: "0:23", y: "2026", date: "2026-11-17", role: "Cinematographer", tone: "#3a1a1c",
     video: "media/haruna-seoul.mp4", poster: "media/haruna-seoul.jpg",
     d: "Annyeonghaseyo! Turned up the heat at Bolero Seoul for Club WAV & Pasapassa.",
@@ -436,7 +446,7 @@ Object.entries(CATS).forEach(([k, c]) => { const card = document.querySelector(`
 /* All page order: the showreel leads, then your work newest upload first.
    Placeholder projects follow, and projects marked nearEnd sit just before the last clip. Add new titles to the end of this list. */
 const UPLOAD_ORDER = ["Purple", "Hawes & Curtis", "Behind the Scenes", "Garden Party", "Arnold Circus", "Chorus",
-  "Autumn/Winter Edit", "HOTEL 555", "In My Darkest Hours", "In My Darkest Hours Pt. 2", "Seoul, Reset Asia Tour"];
+  "Autumn/Winter Edit", "HOTEL 555", "In My Darkest Hours", "In My Darkest Hours Pt. 2", "Seoul, Reset Asia Tour", "Planning & Housing"];
 /* newest upload first */
 const rank = p => { const i = UPLOAD_ORDER.indexOf(p.t); return i < 0 ? UPLOAD_ORDER.length : UPLOAD_ORDER.length - 1 - i; };
 const shuffled = projects.filter(p => !p.nearEnd).map((p, n) => [p, n]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(x => x[0]);
@@ -597,6 +607,8 @@ function renderSet(p) {
   box.dataset.for = p.t;
   box.scrollLeft = 0;
   const spk = '<svg class="off" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path d="m11 6 4 4m0-4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><svg class="on" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5M12.5 3.5a6 6 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
+  box.style.setProperty("--clip-ar", p.clipAr || 9 / 16);
+  box.classList.toggle("landscape", (p.clipAr || 0) > 1);
   box.innerHTML = p.clips.map((c, n) => `<button class="clip" type="button" aria-label="Clip ${n + 1} of ${p.clips.length}, play with sound">
       <video src="${c}.mp4" poster="${c}.jpg" muted loop playsinline preload="none"></video>
       <span class="n">${String(n + 1).padStart(2, "0")}</span><span class="snd">${spk}</span></button>`).join("");
