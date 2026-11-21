@@ -152,7 +152,7 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 .bio p + p { color: var(--soft); }
 .block { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--rule); }
 .block > h2 { margin-bottom: 26px; }
-.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.services { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr)); gap: 18px; }
 /* Service cards: each is a link to its section, with a muted loop from that section playing behind it. */
 .svc { position: relative; overflow: hidden; isolation: isolate; aspect-ratio: 4 / 3; max-width: 100%; min-width: 0; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
   text-decoration: none; color: #f3eedd; background: #1c1b17; transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
@@ -203,7 +203,6 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 .row { display: flex; gap: 20px; align-items: baseline; flex-wrap: wrap; margin-top: 16px; }
 
 @media (max-width: 1100px) {
-  .services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 860px) {
   body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); }
@@ -222,7 +221,6 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
   .stage.vert .pic { max-width: 320px; }
 }
 @media (max-width: 520px) {
-  .services { grid-template-columns: 1fr; }
 }
 @media (hover: none) { .tile:hover { transform: none; box-shadow: none; } .ov { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) {
@@ -297,12 +295,7 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
   <!-- ABOUT -->
   <div id="v-about" class="wrap" hidden>
     <div class="about-hero">
-      <div><div class="small">About Myth</div><h1>Small crew, big frames</h1></div>
-      <p class="lede">I make commercials, music videos and short documentaries for brands and artists who want their work to feel like cinema, not content.</p>
-    </div>
-    <div class="bio">
-      <p>I've spent eight years behind the camera, starting on wedding films and moving into commercial and music work. I like to work with a small crew, motivated light and a lot of preparation, so the day on set feels calm and the footage feels honest.</p>
-      <p>Every project gets the full pipeline in-house: treatment, shot list, production, edit and colour grade, delivered in every aspect ratio your platforms need.</p>
+      <div><div class="small">About Myth</div><h1>Cinematographer, editor &amp; colourist</h1></div>
     </div>
     <div class="block">
       <div class="small">Services</div><h2>What I make</h2>
@@ -311,24 +304,6 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
         <a class="svc" href="#music" data-cat="music"><div class="svc-bg" aria-hidden="true"></div><span class="small">Artists</span><div><h3>Music videos <span class="go" aria-hidden="true">→</span></h3><p>Concept, performance and narrative videos, from treatment to final grade.</p></div></a>
         <a class="svc" href="#documentary" data-cat="documentary"><div class="svc-bg" aria-hidden="true"></div><span class="small">Non-fiction</span><div><h3>Documentary <span class="go" aria-hidden="true">→</span></h3><p>Short-form portraits of people, places and the work they do.</p></div></a>
         <a class="svc" href="#all" data-cat="all"><div class="svc-bg" aria-hidden="true"></div><span class="small">Post</span><div><h3>Edit &amp; grade <span class="go" aria-hidden="true">→</span></h3><p>Editing and colour grading for footage you've already shot.</p></div></a>
-      </div>
-    </div>
-    <div class="block">
-      <div class="small">Kit</div><h2>Shot with</h2>
-      <dl class="kit">
-        <div><dt>Camera</dt><dd>Sony FX6, Blackmagic Pocket 6K Pro</dd></div>
-        <div><dt>Glass</dt><dd>Sigma Cine primes, vintage Helios 44-2</dd></div>
-        <div><dt>Support</dt><dd>DJI RS 4 Pro, Easyrig, slider</dd></div>
-        <div><dt>Light</dt><dd>Aputure 600d, Nova P300c, practicals</dd></div>
-        <div><dt>Post</dt><dd>DaVinci Resolve Studio, Premiere Pro</dd></div>
-        <div><dt>Delivery</dt><dd>4K ProRes 422 HQ, in 4:3, 16:9, 9:16 and 1:1</dd></div>
-      </dl>
-    </div>
-    <div class="block">
-      <div class="small">Booking</div><h2>Working together</h2>
-      <div class="booking">
-        <div><div class="small">Availability</div><p>Booking from December 2026 onward.</p></div>
-        <div><div class="small">For a quote, include</div><p>Shoot dates, location, deliverables and a rough budget. I reply within two working days.</p></div>
       </div>
     </div>
   </div>
@@ -368,10 +343,9 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
         <div>
           <div class="small">Elsewhere</div>
           <div class="row">
-            <a class="lnk" href="https://instagram.com" target="_blank" rel="noopener">instagram</a>
+            <a class="lnk" href="https://www.instagram.com/hotmythsinyourarea/" target="_blank" rel="noopener">instagram</a>
           </div>
         </div>
-        <p class="side-note">I reply within two working days.</p>
       </aside>
     </div>
   </div>
@@ -435,48 +409,6 @@ const projects = [
     ar: 1920 / 712, video: "media/seka-purple.mp4", poster: "media/seka-purple.jpg",
     d: "A short film for SEKA's purple frame, shot in the shop with the riders and staff around it.",
     g: "#17141c" },
-  { t: "Night Shift", c: "Kōji Coffee Roasters", type: "commercial", rt: "0:45", y: "2026", role: "DP, colour", tone: "#3a3428",
-    d: "A late-night café spot lit almost entirely by the espresso bar and street light.",
-    g: "radial-gradient(circle at 72% 64%,#ffcf8a 0 6%,transparent 22%),linear-gradient(170deg,#0f1a26 0%,#22303d 45%,#b9682c 80%,#f1b25d 100%)" },
-  { t: "Paper Moons", c: "Haru Saito", type: "music", rt: "3:52", y: "2026", role: "Director, DP, colour", tone: "#3c3242",
-    d: "A one-night performance piece lit by a single moon-sized balloon light and paper lanterns.",
-    g: "radial-gradient(circle at 66% 30%,#ffe2b8 0 9%,transparent 10%),linear-gradient(180deg,#2b1d3a,#5d3c6c 60%,#df8c6a)" },
-  { t: "Hands of the Kiln", c: "Short documentary", type: "doc", rt: "11:20", y: "2025", role: "Director, DP, edit", tone: "#4a3627",
-    d: "A potter's last firing before retirement, filmed over three days at a wood-fired kiln.",
-    g: "radial-gradient(ellipse at 30% 80%,#ffbf6b 0 12%,transparent 40%),linear-gradient(200deg,#2f2219,#6e4327 55%,#c9803b)" },
-  { t: "Tide Line", c: "Nami Swimwear", type: "commercial", rt: "0:30", y: "2025", role: "DP, edit, colour", tone: "#2e4245",
-    d: "Summer campaign shot over two mornings on the coast, cut for web and 9:16 social.",
-    g: "linear-gradient(180deg,#cfe6e2 0%,#6aaab2 46%,#1f5462 52%,#0f2f3a 100%)" },
-  { t: "Static Bloom", c: "The Lanterns", type: "music", rt: "4:10", y: "2025", role: "DP, colour", tone: "#40272f",
-    d: "A band performance shot in one room with shifting red and magenta practicals.",
-    g: "conic-gradient(from 210deg at 32% 60%,#0d0b10,#2c1230,#a52f48,#0d0b10)" },
-  { t: "Morning Ritual", c: "Ame Skincare", type: "commercial", rt: "0:20", y: "2025", role: "DP, colour", tone: "#55463a",
-    d: "Product film built around soft window light and slow, close details.",
-    g: "radial-gradient(ellipse at 25% 30%,#fff3e2 0 14%,transparent 45%),linear-gradient(135deg,#efe0cf,#d9b796 55%,#a87b5c)" },
-  { t: "Last Train Out", c: "Festival short", type: "doc", rt: "7:05", y: "2024", role: "DP, colour", tone: "#2f3a37",
-    d: "The night staff of a rural station on the final week before the line closes.",
-    g: "radial-gradient(circle at 82% 50%,#e8d7a8 0 4%,transparent 18%),linear-gradient(90deg,#0b0f12 0%,#18242c 45%,#33504f 75%,#a4b39d 100%)" },
-  { t: "Ironwood", c: "Ironwood Cycles", type: "commercial", rt: "0:60", y: "2024", role: "Director of photography", tone: "#3d3e2e",
-    d: "A hand-built bicycle followed from the workshop bench to its first ride at dawn.",
-    g: "linear-gradient(160deg,#1c1f1b 0%,#3e4536 40%,#8c7a4e 75%,#d7b46a 100%)" },
-  { t: "Slow Burn", c: "Kei Arata", type: "music", rt: "3:18", y: "2024", role: "Director, DP, edit", tone: "#452b21",
-    d: "A slow-motion narrative video lit almost entirely by flame and a single tungsten source.",
-    g: "radial-gradient(circle at 40% 55%,#ff7a3d 0 7%,transparent 30%),linear-gradient(180deg,#0e0a09,#2a1410 60%,#5b2516)" },
-  { t: "The Night Market", c: "Short documentary", type: "doc", rt: "9:40", y: "2024", role: "DP, edit, colour", tone: "#2e2c3a",
-    d: "Three vendors at a weekend night market, from setup at dusk to pack-down at 2am.",
-    g: "radial-gradient(circle at 20% 40%,#ffd36b 0 5%,transparent 16%),radial-gradient(circle at 75% 35%,#ff6b5a 0 4%,transparent 14%),linear-gradient(180deg,#0c0d16,#1e1b2c 60%,#3c2a2a)" },
-  { t: "First Pour", c: "Kōji Coffee Roasters", type: "vertical", rt: "0:15", y: "2026", role: "DP, edit, colour", fmt: "Reel", tone: "#3d2d21",
-    d: "A one-take pour shot for Instagram Reels, built to loop cleanly.",
-    g: "radial-gradient(ellipse at 50% 70%,#e6a25a 0 10%,transparent 34%),linear-gradient(180deg,#120d0a 0%,#2b1c13 55%,#6b3f22 100%)" },
-  { t: "Golden Hour", c: "Nami Swimwear", type: "vertical", rt: "0:12", y: "2025", role: "DP, edit", fmt: "TikTok", tone: "#47392c",
-    d: "Social cutdown from the Tide Line campaign, reframed and re-edited for 9:16.",
-    g: "radial-gradient(circle at 50% 38%,#ffe0a3 0 7%,transparent 26%),linear-gradient(180deg,#f2c58a 0%,#d98a5a 35%,#2f6470 62%,#10303a 100%)" },
-  { t: "Paper Moons Teaser", c: "Haru Saito", type: "vertical", rt: "0:20", y: "2026", role: "Edit, colour", fmt: "Shorts", tone: "#3a3040",
-    d: "Release teaser cut from the music video for Shorts, Reels and Stories.",
-    g: "radial-gradient(circle at 50% 26%,#ffe2b8 0 11%,transparent 12%),linear-gradient(180deg,#24182f,#4f3460 55%,#d4836a)" },
-  { t: "Wheel Day", c: "Hara Pottery Studio", type: "vertical", rt: "0:30", y: "2025", role: "DP, edit, colour", fmt: "Reel", tone: "#4a3b2e",
-    d: "Studio promo following one bowl from wet clay to the glaze shelf.",
-    g: "radial-gradient(ellipse at 50% 60%,#d9a679 0 14%,transparent 40%),linear-gradient(180deg,#2a2019,#5c4130 55%,#a87b55)" },
 ];
 const BASE = "#263A00";
 const reel = { reel: true, t: "Showreel 2026", c: "selected moments", rt: "1:42", tone: "#3e3a30" };
@@ -494,7 +426,12 @@ Object.values(CATS).forEach(c => { c.list = projects.filter(p => p.type === c.ty
 let cat = null;
 const $ = id => document.getElementById(id);
 const setTone = c => document.documentElement.style.setProperty("--bg", c);
-document.querySelectorAll("[data-count]").forEach(el => el.textContent = projects.filter(p => p.type === el.dataset.count || (p.also || []).includes(el.dataset.count)).length);
+document.querySelectorAll("[data-count]").forEach(el => {
+  const n = projects.filter(p => p.type === el.dataset.count || (p.also || []).includes(el.dataset.count)).length;
+  el.textContent = n;
+  el.closest("a").hidden = n === 0;   /* sections with no work yet stay hidden until you add some */
+});
+Object.entries(CATS).forEach(([k, c]) => { const card = document.querySelector(`.svc[data-cat="${k}"]`); if (card) card.hidden = !c.list.length; });
 
 /* All page order: the showreel leads, then your work newest upload first.
    Placeholder projects follow, and projects marked nearEnd sit just before the last clip. Add new titles to the end of this list. */
@@ -768,7 +705,7 @@ $("stage").addEventListener("touchend", e => {
 const VIEWS = ["all", "commercial", "music", "documentary", "vertical", "about", "contact"];
 let current = null;
 function render(view) {
-  if (view === "all") layout($("collage-all"), [reel, ...shuffled]);
+  if (view === "all") layout($("collage-all"), shuffled);
   if (CATS[view]) {
     const changed = cat !== view;
     cat = view;
@@ -778,7 +715,7 @@ function render(view) {
 }
 function route() {
   let h = location.hash.slice(1);
-  if (!VIEWS.includes(h)) h = "all";
+  if (!VIEWS.includes(h) || (CATS[h] && !CATS[h].list.length)) h = "all";
   $("v-all").hidden = h !== "all";
   $("v-cat").hidden = !CATS[h];
   $("v-about").hidden = h !== "about";
@@ -819,7 +756,7 @@ $("cform").addEventListener("submit", async e => {
     const j = await r.json().catch(() => ({}));
     if (!r.ok || String(j.success) === "false") throw new Error(j.message || "Send failed");
     f.reset();
-    status.classList.add("ok"); status.textContent = "Thanks, your message was sent. I'll reply within two working days.";
+    status.classList.add("ok"); status.textContent = "Thanks, your message was sent. I'll be in touch soon.";
   } catch (err) {
     status.classList.add("err"); status.textContent = `The message couldn't be sent from here. Please email ${FORM_TO} instead.`;
   } finally { btn.disabled = false; btn.textContent = "Send message"; }
