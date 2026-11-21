@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Myth: cinematographer, editor and colourist. Commercials, music videos, documentary and vertical work.">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Myth Film Portfolio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: quiet sidebar index on the left; every frame is mounted in a cream print border; the page ground takes on a muted tone from whichever project is showing. All = loose collage, categories = one framed project with a vertical index. Single committed look. */
+@property --bg { syntax: "<color>"; inherits: true; initial-value: #263A00; }
+:root {
+  --bg: #263A00;          /* olive green ground, shifts per project */
+  --ink: #ece5cd;         /* cream text */
+  --soft: rgba(236, 229, 205, .64);
+  --rule: rgba(236, 229, 205, .2);
+  --mat: #e7e0c6;         /* print border */
+  --accent: #dcae68;
+  --display: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --body: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --type: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --side: 220px;
+  --ease: cubic-bezier(.2, .8, .2, 1);
+  color-scheme: dark;
+  transition: --bg 1.1s ease;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { background: var(--bg); }
+body { background: var(--bg); color: var(--ink); font: 400 16px/1.55 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 1px dashed var(--ink); outline-offset: 4px; }
+.small { font: 400 11px/1.5 var(--type); letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+.lnk { font: 400 15px/1.3 var(--display); color: var(--ink); background: none; border: 0; padding: 0 0 1px; cursor: pointer; text-decoration: none; border-bottom: 1px solid var(--soft); transition: border-color .25s, color .25s; }
+.lnk:hover { border-bottom-color: var(--ink); border-bottom-style: solid; }
+.lnk:disabled { opacity: .3; cursor: default; border-bottom-style: solid; }
+
+/* Sidebar */
+.side { position: fixed; top: 0; bottom: 0; left: 0; width: calc(var(--side) + env(safe-area-inset-left, 0px)); z-index: 10;
+  padding: calc(56px + env(safe-area-inset-top, 0px)) 20px calc(32px + env(safe-area-inset-bottom, 0px)) max(32px, env(safe-area-inset-left, 0px));
+  display: flex; flex-direction: column; gap: 44px; overflow-y: auto; }
+.logo { font: 700 28px/1 var(--display); text-decoration: none; letter-spacing: -.02em; }
+.logo span { color: var(--accent); }
+.roles { margin-top: 10px; font: 400 14px/1.45 var(--body); color: var(--soft); }
+.navs { display: flex; flex-direction: column; gap: 30px; }
+.group { display: flex; flex-direction: column; gap: 4px; align-items: flex-start; }
+.group .small { margin-bottom: 6px; }
+.group a { font: 400 16px/1.4 var(--display); text-decoration: none; color: var(--soft); padding-bottom: 1px; border-bottom: 1px solid transparent; transition: color .25s, border-color .25s; white-space: nowrap; }
+.group a:hover { color: var(--ink); }
+.group a[aria-current="page"] { color: var(--ink); border-bottom-color: var(--ink); }
+.group a sup { font: 400 10px var(--type); color: var(--soft); margin-left: 3px; }
+.side-foot { margin-top: auto; display: flex; flex-direction: column; gap: 4px; }
+.side-foot a { font: 400 13px var(--body); color: var(--soft); text-decoration: none; overflow-wrap: anywhere; }
+.side-foot a:hover { color: var(--ink); }
+
+/* Main */
+main { margin-left: calc(var(--side) + env(safe-area-inset-left, 0px)); min-width: 0; }
+.wrap { max-width: 1180px; padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(40px, env(safe-area-inset-right, 0px)); padding-block: 56px 80px; }
+h1 { font: 500 clamp(32px, 3.6vw, 46px)/1.06 var(--display); letter-spacing: -.025em; margin: 8px 0 0; text-wrap: balance; }
+h1 em { color: var(--accent); font-style: normal; }
+h2, h3 { letter-spacing: -.015em; font-weight: 500 !important; }
+h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
+
+/* Mounted frame: cream print border around a 4:3 (or 9:16) picture */
+.mat { display: block; box-shadow: 0 10px 26px -10px rgba(0,0,0,.55); max-width: 100%; }
+.frame { position: relative; aspect-ratio: 4 / 3; max-width: 100%; overflow: hidden; background: #1c1b17; }
+.frame.vert { aspect-ratio: 9 / 16; }
+.frame canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.frame video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; background: #000; transition: transform .9s var(--ease); }
+.tile:hover video, .tile:focus-visible video { transform: scale(1.04); }
+.still { position: absolute; inset: 0; background: var(--g); filter: saturate(.8) sepia(.08) contrast(1.02); transition: transform .9s var(--ease), filter .5s; }
+
+/* All: tight collage. Clips sit in justified rows with hairline gaps; hovering sends a ripple through them. */
+.intro { margin-bottom: 20px; max-width: 34ch; }
+.collage { position: relative; }
+.cell { position: absolute; will-change: transform; }
+.cell:hover, .cell:focus-within { z-index: 3; }
+.tile { display: block; width: 100%; height: 100%; text-decoration: none; transition: transform .6s var(--ease), box-shadow .6s var(--ease); }
+.tile .frame { aspect-ratio: auto; width: 100%; height: 100%; }
+.tile { transform-origin: var(--ox, center) var(--oy, center); }
+.tile:hover, .tile:focus-visible { transform: scale(var(--grow, 1.22)); box-shadow: 0 30px 60px -18px rgba(0,0,0,.8); }
+.tile:hover .still, .tile:focus-visible .still { filter: saturate(1) contrast(1.04); transform: scale(1.04); }
+.fmt { position: absolute; left: 8px; top: 8px; z-index: 2; font: 400 10px var(--type); letter-spacing: .1em; color: #f3eedd; padding: 3px 6px; background: rgba(20,18,14,.55); }
+.ov { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 32px 12px 10px; display: flex; justify-content: space-between; align-items: flex-end; gap: 10px;
+  background: linear-gradient(rgba(12,10,8,0), rgba(12,10,8,.75)); color: #f3eedd; opacity: 0; transform: translateY(6px); transition: opacity .35s, transform .35s var(--ease); }
+.tile:hover .ov, .tile:focus-visible .ov { opacity: 1; transform: none; }
+.ov > div { min-width: 0; }
+.ov h3 { font: 500 15px/1.2 var(--display); margin: 0; overflow-wrap: anywhere; }
+.ov .sub { font: 400 12px/1.3 var(--body); color: rgba(243,238,221,.75); margin-top: 2px; }
+.ov .rt { font: 400 11px var(--type); color: rgba(243,238,221,.75); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+
+/* Category: one framed project with a vertical index */
+.crumb { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 26px; }
+.stage { display: grid; grid-template-columns: minmax(0, min(800px, calc((100vh - 360px) * 4 / 3))); grid-template-areas: "head" "pic" "foot" "desc"; }
+.stage.vert { grid-template-columns: minmax(0, min(380px, calc((100vh - 360px) * 9 / 16))); }
+.stage.wide { grid-template-columns: minmax(0, min(1040px, calc((100vh - 360px) * var(--ar, 2.7)))); }
+.stage-head { grid-area: head; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.stage-head h1 { font-size: clamp(22px, 2.2vw, 28px); margin: 0; text-transform: uppercase; letter-spacing: .01em; }
+.stage-head .bar { color: var(--soft); font-family: var(--display); }
+.stage-head .client { font: 400 clamp(22px, 2.2vw, 27px)/1.1 var(--display); color: var(--soft); }
+.index { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px; }
+.index li { display: flex; align-items: baseline; gap: 4px; }
+.index li + li::before { content: "·"; color: var(--soft); }
+.index button { font: 400 15px/1.6 var(--display); font-variant-numeric: tabular-nums; color: var(--soft); background: none; border: 0; padding: 0 2px 1px; cursor: pointer; border-bottom: 1px solid transparent; }
+.index button:hover { color: var(--ink); }
+.index button[aria-current="true"] { color: var(--ink); border-bottom-color: var(--ink); }
+.pic { grid-area: pic; display: block; }
+/* A set of clips (e.g. a lookbook): a row of 9:16 clips that scrolls sideways inside the stage. */
+.stage.set { grid-template-columns: minmax(0, 1040px); }
+.clipset { grid-area: pic; display: flex; gap: 6px; overflow-x: auto; scroll-snap-type: x proximity; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--rule) transparent; }
+.clip { flex: 0 0 auto; height: clamp(300px, calc(100vh - 400px), 620px); aspect-ratio: 9 / 16; position: relative; scroll-snap-align: start; background: #000; border: 0; padding: 0; cursor: pointer; overflow: hidden; }
+.clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.clip .n { position: absolute; left: 8px; top: 8px; font: 400 10px var(--type); letter-spacing: .1em; color: #f3eedd; padding: 3px 6px; background: rgba(20,18,14,.55); }
+.clip .snd { position: absolute; right: 8px; bottom: 8px; width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: rgba(20,18,14,.55); color: #f3eedd; }
+.clip .snd svg { width: 14px; height: 14px; }
+.clip .snd .on { display: none; }
+.clip.sound .snd { background: var(--ink); color: #1c1b17; }
+.clip.sound .snd .on { display: block; }
+.clip.sound .snd .off { display: none; }
+.set-hint { margin-top: 2px; }
+.stage-foot { grid-area: foot; display: flex; justify-content: space-between; align-items: baseline; gap: 12px 24px; flex-wrap: wrap; margin-top: 16px; }
+.links { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.ico { width: 40px; height: 40px; border-radius: 50%; display: inline-grid; place-items: center; border: 1px solid var(--rule); background: none; color: var(--ink); cursor: pointer; padding: 0; transition: border-color .25s, background .25s, color .25s, transform .25s var(--ease); }
+.ico svg { width: 16px; height: 16px; display: block; }
+.ico:hover { border-color: var(--ink); }
+.ico:disabled { opacity: .3; cursor: default; border-color: var(--rule); }
+.ico.play { width: 48px; height: 48px; background: var(--ink); color: var(--bg); border-color: var(--ink); margin-right: 8px; }
+.ico.play svg { width: 18px; height: 18px; margin-left: 3px; }
+.ico.play .i-pause { display: none; margin-left: 0; }
+.ico.play.playing .i-play { display: none; }
+.ico.play.playing .i-pause { display: block; }
+.ico.play:hover { transform: scale(1.06); }
+.meta-line { font: 400 12px var(--type); letter-spacing: .06em; color: var(--soft); font-variant-numeric: tabular-nums; }
+.desc { grid-area: desc; margin: 18px 0 0; max-width: 52ch; color: var(--soft); }
+.swapping .stage-head, .swapping .pic, .swapping .stage-foot, .swapping .desc { opacity: 0; transform: translateY(6px); }
+.stage-head, .pic, .stage-foot, .desc { transition: opacity .4s var(--ease), transform .4s var(--ease); }
+
+
+/* About */
+.about-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: end; }
+.lede { font: 400 clamp(19px, 1.8vw, 22px)/1.4 var(--body); letter-spacing: -.01em; margin: 0; }
+.bio { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 48px; margin-top: 44px; }
+.bio p { margin: 0; max-width: 56ch; }
+.bio p + p { color: var(--soft); }
+.block { margin-top: 64px; padding-top: 30px; border-top: 1px solid var(--rule); }
+.block > h2 { margin-bottom: 26px; }
+.services { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+/* Service cards: each is a link to its section, with a muted loop from that section playing behind it. */
+.svc { position: relative; overflow: hidden; isolation: isolate; aspect-ratio: 4 / 3; max-width: 100%; min-width: 0; padding: 18px; display: flex; flex-direction: column; justify-content: space-between; gap: 10px;
+  text-decoration: none; color: #f3eedd; background: #1c1b17; transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+.svc::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(14,12,10,.55) 0%, rgba(14,12,10,.15) 40%, rgba(14,12,10,.78) 100%); transition: opacity .5s; }
+.svc-bg { position: absolute; inset: 0; z-index: -2; }
+.svc-bg video, .svc-bg .grad { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s var(--ease); }
+.svc-bg .grad { background: var(--g); background-size: 160% 160%; animation: drift 14s ease-in-out infinite alternate; }
+@keyframes drift { from { background-position: 0% 30%; } to { background-position: 100% 70%; } }
+.svc .small { color: rgba(243,238,221,.8); }
+.svc h3 { font: 500 23px/1.1 var(--display); margin: 0 0 4px; display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.svc .go { font-size: 18px; opacity: 0; transform: translateX(-6px); transition: opacity .3s, transform .3s var(--ease); }
+.svc p { font-size: 15px; color: rgba(243,238,221,.8); margin: 0; line-height: 1.4; }
+.svc:hover, .svc:focus-visible { transform: translateY(-4px); box-shadow: 0 22px 40px -18px rgba(0,0,0,.7); }
+.svc:hover .svc-bg video, .svc:hover .svc-bg .grad, .svc:focus-visible .svc-bg video { transform: scale(1.06); }
+.svc:hover::after { opacity: .8; }
+.svc:hover .go, .svc:focus-visible .go { opacity: 1; transform: none; }
+.kit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; margin: 0; }
+.kit div { display: grid; grid-template-columns: 7.5em minmax(0, 1fr); gap: 14px; padding-block: 11px; border-bottom: 1px solid var(--rule); }
+.kit dt { font: 400 11px/2.1 var(--type); letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+.kit dd { margin: 0; }
+.booking { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 48px; }
+.booking p { margin: 8px 0 0; max-width: 44ch; }
+
+/* Contact */
+.email { display: block; font: 500 clamp(20px, 2vw, 26px)/1.2 var(--display); letter-spacing: -.01em; overflow-wrap: anywhere; user-select: all; margin-top: 8px; }
+.contact-wrap { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 56px; margin-top: 36px; align-items: start; }
+.cform { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field em { font-style: normal; text-transform: none; letter-spacing: 0; opacity: .7; }
+.field input, .field select, .field textarea { font: 400 16px/1.4 var(--body); color: var(--ink); background: rgba(0,0,0,.16); border: 0; border-bottom: 1px solid var(--rule); border-radius: 2px 2px 0 0; padding: 11px 12px; width: 100%; transition: border-color .2s, background .2s; }
+.field textarea { resize: vertical; min-height: 140px; }
+.field select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--soft) 50%), linear-gradient(135deg, var(--soft) 50%, transparent 50%); background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 34px; }
+.field select option { color: #1c1b17; }
+.field ::placeholder { color: var(--soft); opacity: .7; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; border-bottom-color: var(--ink); background: rgba(0,0,0,.24); }
+.field.bad input, .field.bad textarea { border-bottom-color: #e08a6c; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form-foot { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; margin-top: 4px; }
+.send { font: 500 15px var(--display); color: var(--bg); background: var(--ink); border: 0; border-radius: 999px; padding: 13px 26px; cursor: pointer; transition: transform .25s var(--ease), opacity .2s; }
+.send:hover { transform: translateY(-1px); }
+.send:disabled { opacity: .5; cursor: default; transform: none; }
+.form-status { margin: 0; font-size: 15px; color: var(--soft); min-height: 1.4em; }
+.form-status.ok { color: var(--ink); }
+.form-status.err { color: #eaa98f; }
+.contact-side { display: flex; flex-direction: column; gap: 32px; padding-top: 4px; min-width: 0; }
+.side-note { margin: 0; color: var(--soft); }
+.row { display: flex; gap: 20px; align-items: baseline; flex-wrap: wrap; margin-top: 16px; }
+
+@media (max-width: 1100px) {
+  .services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); }
+  .side { position: sticky; top: env(safe-area-inset-top, 0px); bottom: auto; width: auto; flex-direction: row; align-items: center; gap: 20px; overflow: visible; background: var(--bg);
+    padding: 14px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); border-bottom: 1px solid var(--rule); }
+  .logo { font-size: 24px; }
+  .roles, .side-foot, .group .small, .group a sup { display: none; }
+  .navs { flex-direction: row; gap: 16px; overflow-x: auto; min-width: 0; scrollbar-width: none; }
+  .navs::-webkit-scrollbar { display: none; }
+  .group { flex-direction: row; gap: 16px; }
+  .group a { font-size: 15px; }
+  main { margin-left: 0; }
+  .wrap { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 56px; }
+  .about-hero, .bio, .kit, .booking, .contact-wrap, .field-row { grid-template-columns: 1fr; }
+  .stage, .stage.vert, .stage.wide { grid-template-columns: minmax(0, 1fr); }
+  .stage.vert .pic { max-width: 320px; }
+}
+@media (max-width: 520px) {
+  .services { grid-template-columns: 1fr; }
+}
+@media (hover: none) { .tile:hover { transform: none; box-shadow: none; } .ov { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .svc-bg .grad { animation: none; }
+  :root { transition: none; }
+  .tile, .ov, .still, .stage-head, .pic, .stage-foot, .desc { transition: none; }
+  .tile:hover, .tile:focus-visible { transform: none; }
+}
+</style>
+</head>
+<body>
+
+<aside class="side">
+  <div>
+    <a class="logo" href="#all">Myth<span>.</span></a>
+    <div class="roles">cinematographer, editor &amp; colourist</div>
+  </div>
+  <nav class="navs" aria-label="Main">
+    <div class="group">
+      <span class="small">Work</span>
+      <a href="#all" data-v="all">all</a>
+      <a href="#commercial" data-v="commercial">commercial<sup data-count="commercial"></sup></a>
+      <a href="#music" data-v="music">music video<sup data-count="music"></sup></a>
+      <a href="#documentary" data-v="documentary">documentary<sup data-count="doc"></sup></a>
+      <a href="#vertical" data-v="vertical">vertical<sup data-count="vertical"></sup></a>
+    </div>
+    <div class="group">
+      <span class="small">Studio</span>
+      <a href="#about" data-v="about">about</a>
+      <a href="#contact" data-v="contact">contact</a>
+    </div>
+  </nav>
+  <div class="side-foot">
+    <a href="#contact">mythnlvideo@gmail.com</a>
+    <span class="small">© 2026 Myth</span>
+  </div>
+</aside>
+
+<main>
+  <!-- ALL (home) -->
+  <div id="v-all" class="wrap">
+    <div class="intro">
+      <div class="small">All work, 2023–2026</div>
+    </div>
+    <div class="collage" id="collage-all"></div>
+  </div>
+
+  <!-- CATEGORY: one project at a time -->
+  <div id="v-cat" class="wrap" hidden>
+    <div class="crumb">
+      <div class="small"><span id="cat-title"></span> · <span id="vw-count"></span></div>
+      <ol class="index" id="vw-index" aria-label="Projects in this section"></ol>
+    </div>
+    <div class="stage" id="stage">
+      <div class="stage-head"><h1 id="vw-title"></h1><span class="bar" aria-hidden="true">|</span><span class="client" id="vw-client"></span></div>
+      <a class="pic mat" id="vw-link" href="https://vimeo.com" target="_blank" rel="noopener"><div class="frame" id="vw-frame"><div class="still" id="vw-still"></div><video id="vw-video" playsinline muted loop preload="metadata" hidden></video></div></a>
+      <div class="clipset" id="vw-set" hidden aria-label="Clips in this project"></div>
+      <div class="stage-foot">
+        <div class="links">
+          <a class="ico play" id="vw-watch" href="https://vimeo.com" target="_blank" rel="noopener" aria-label="Play film" title="Play film"><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z" fill="currentColor"/></svg><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2h3v12H4zM9 2h3v12H9z" fill="currentColor"/></svg></a>
+          <button class="ico" type="button" id="prev" aria-label="Previous project" title="Previous"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="ico" type="button" id="next" aria-label="Next project" title="Next"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <span class="meta-line" id="vw-meta"></span>
+      </div>
+      <p class="desc" id="vw-desc"></p>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div id="v-about" class="wrap" hidden>
+    <div class="about-hero">
+      <div><div class="small">About Myth</div><h1>Small crew, big frames</h1></div>
+      <p class="lede">I make commercials, music videos and short documentaries for brands and artists who want their work to feel like cinema, not content.</p>
+    </div>
+    <div class="bio">
+      <p>I've spent eight years behind the camera, starting on wedding films and moving into commercial and music work. I like to work with a small crew, motivated light and a lot of preparation, so the day on set feels calm and the footage feels honest.</p>
+      <p>Every project gets the full pipeline in-house: treatment, shot list, production, edit and colour grade, delivered in every aspect ratio your platforms need.</p>
+    </div>
+    <div class="block">
+      <div class="small">Services</div><h2>What I make</h2>
+      <div class="services">
+        <a class="svc" href="#commercial" data-cat="commercial"><div class="svc-bg" aria-hidden="true"></div><span class="small">Brands</span><div><h3>Commercials <span class="go" aria-hidden="true">→</span></h3><p>15 to 60 second spots and product films, with cutdowns for social.</p></div></a>
+        <a class="svc" href="#music" data-cat="music"><div class="svc-bg" aria-hidden="true"></div><span class="small">Artists</span><div><h3>Music videos <span class="go" aria-hidden="true">→</span></h3><p>Concept, performance and narrative videos, from treatment to final grade.</p></div></a>
+        <a class="svc" href="#documentary" data-cat="documentary"><div class="svc-bg" aria-hidden="true"></div><span class="small">Non-fiction</span><div><h3>Documentary <span class="go" aria-hidden="true">→</span></h3><p>Short-form portraits of people, places and the work they do.</p></div></a>
+        <a class="svc" href="#all" data-cat="all"><div class="svc-bg" aria-hidden="true"></div><span class="small">Post</span><div><h3>Edit &amp; grade <span class="go" aria-hidden="true">→</span></h3><p>Editing and colour grading for footage you've already shot.</p></div></a>
+      </div>
+    </div>
+    <div class="block">
+      <div class="small">Kit</div><h2>Shot with</h2>
+      <dl class="kit">
+        <div><dt>Camera</dt><dd>Sony FX6, Blackmagic Pocket 6K Pro</dd></div>
+        <div><dt>Glass</dt><dd>Sigma Cine primes, vintage Helios 44-2</dd></div>
+        <div><dt>Support</dt><dd>DJI RS 4 Pro, Easyrig, slider</dd></div>
+        <div><dt>Light</dt><dd>Aputure 600d, Nova P300c, practicals</dd></div>
+        <div><dt>Post</dt><dd>DaVinci Resolve Studio, Premiere Pro</dd></div>
+        <div><dt>Delivery</dt><dd>4K ProRes 422 HQ, in 4:3, 16:9, 9:16 and 1:1</dd></div>
+      </dl>
+    </div>
+    <div class="block">
+      <div class="small">Booking</div><h2>Working together</h2>
+      <div class="booking">
+        <div><div class="small">Availability</div><p>Booking from December 2026 onward.</p></div>
+        <div><div class="small">For a quote, include</div><p>Shoot dates, location, deliverables and a rough budget. I reply within two working days.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div id="v-contact" class="wrap" hidden>
+    <div class="small">Contact</div>
+    <h1>Let's make something</h1>
+    <div class="contact-wrap">
+      <form class="cform" id="cform" novalidate>
+        <div class="field-row">
+          <label class="field"><span class="small">Name</span><input id="cf-name" name="name" type="text" autocomplete="name" required></label>
+          <label class="field"><span class="small">Email</span><input id="cf-email" name="email" type="email" autocomplete="email" required></label>
+        </div>
+        <div class="field-row">
+          <label class="field"><span class="small">Project</span>
+            <select id="cf-type" name="project">
+              <option>Commercial</option><option>Music video</option><option>Documentary</option>
+              <option>Vertical / social</option><option>Edit &amp; grade only</option><option>Something else</option>
+            </select></label>
+          <label class="field"><span class="small">Shoot dates <em>(optional)</em></span><input id="cf-dates" name="dates" type="text" placeholder="e.g. early March, 2 days"></label>
+        </div>
+        <label class="field"><span class="small">Budget <em>(optional)</em></span><input id="cf-budget" name="budget" type="text" placeholder="A rough range is fine"></label>
+        <label class="field"><span class="small">Message</span><textarea id="cf-msg" name="message" rows="6" required placeholder="What are you making, where, and what do you need delivered?"></textarea></label>
+        <input class="hp" id="cf-hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-foot">
+          <button class="send" type="submit" id="cf-send">Send message</button>
+          <p class="form-status" id="cf-status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <aside class="contact-side">
+        <div>
+          <div class="small">Or email directly</div>
+          <span class="email" id="email">mythnlvideo@gmail.com</span>
+          <div class="row"><button class="lnk" type="button" id="copy">copy email</button></div>
+        </div>
+        <div>
+          <div class="small">Elsewhere</div>
+          <div class="row">
+            <a class="lnk" href="https://instagram.com" target="_blank" rel="noopener">instagram</a>
+          </div>
+        </div>
+        <p class="side-note">I reply within two working days.</p>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<script>
+/* Placeholder projects: replace titles, clients, links and stills with your own.
+   tone = the muted page colour shown while that project is on screen. */
+const projects = [
+  { t: "Arnold Circus", c: "SKOL", type: "music", rt: "0:30", y: "2026", date: "2026-08-18", tone: "#33402c",
+    video: "media/skol-arnold-circus.mp4", poster: "media/skol-arnold-circus.jpg",
+    d: "A music video for SKOL shot around the bandstand and gardens of Arnold Circus, under the summer trees.",
+    g: "#1f2a1c" },
+  { t: "Chorus", c: "SKOL", type: "music", rt: "0:46", y: "2026", date: "2026-07-28", tone: "#4a2326",
+    video: "media/skol-chorus.mp4", poster: "media/skol-chorus.jpg",
+    d: "The chorus section of a SKOL music video, performed to camera between red pillars and green lattice screens.",
+    g: "#2a1416" },
+  { t: "Garden Party", c: "Queens Yard", type: "commercial", rt: "0:24", y: "2026", date: "2026-06-17", tone: "#3b4048",
+    ar: 16 / 9, video: "media/qygp.mp4", poster: "media/qygp.jpg",
+    d: "A fast-cut event film for the Queens Yard Garden Party: open-air sound system, sunshine and the crowd up close.",
+    g: "#23262b" },
+  { t: "Behind the Scenes", c: "GNF", type: "commercial", rt: "1:04", y: "2026", date: "2026-07-22", tone: "#4a3a26",
+    ar: 16 / 9, video: "media/gnf-bts.mp4", poster: "media/gnf-bts.jpg",
+    d: "Behind the scenes of the music sessions for Glastonbury Nut Farm (GNF), where the film's score was written and recorded in a home studio: hammered dulcimer, songwriting and conversation among the bookshelves.",
+    g: "#2a2118" },
+  { t: "Hawes & Curtis", c: "Look Book Edits", type: "commercial", also: ["vertical"], nearEnd: true,
+    y: "2026", date: "2026-04-10", fmt: "Lookbook", rt: "39 clips", tone: "#4a3d30", ar: 9 / 16,
+    /* Day 1 (18 clips) then Day 2 (21 clips; there is no D2V16) */
+    clips: [
+      ...Array.from({ length: 18 }, (_, n) => `media/hc-lookbook/d1v${n + 1}`),
+      ...[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 17, 18, 19, 20, 21, 22].map(n => `media/hc-lookbook/d2v${n}`),
+    ],
+    video: "media/hc-lookbook/d1v1.mp4", poster: "media/hc-lookbook/d1v1.jpg",
+    d: "Thirty-nine vertical edits from two days of the Hawes & Curtis lookbook: linen tailoring and summer separates against a warm studio backdrop. Tap a clip to hear it.",
+    g: "#3a3027" },
+  { t: "Purple", c: "SEKA", type: "commercial", rt: "0:23", y: "2026", date: "2026-03-30", role: "DP, edit, colour", tone: "#2b2534",
+    ar: 1920 / 712, video: "media/seka-purple.mp4", poster: "media/seka-purple.jpg",
+    d: "A short film for SEKA's purple frame, shot in the shop with the riders and staff around it.",
+    g: "#17141c" },
+  { t: "Instagram Reel", c: "@hotmythsinyourarea", type: "commercial", vert: true, fmt: "Reel", rt: "Reel", y: "2026", role: "DP, edit, colour", tone: "#3f3229",
+    url: "https://www.instagram.com/reel/DZ5KgA7hkzS/",
+    d: "Vertical commercial piece shot and cut for Instagram. Press play to watch it on Instagram.",
+    g: "radial-gradient(ellipse at 50% 42%,#f0c27a 0 9%,transparent 32%),linear-gradient(180deg,#1b1510 0%,#3a2a1d 55%,#7a5233 100%)" },
+  { t: "Night Shift", c: "Kōji Coffee Roasters", type: "commercial", rt: "0:45", y: "2026", role: "DP, colour", tone: "#3a3428",
+    d: "A late-night café spot lit almost entirely by the espresso bar and street light.",
+    g: "radial-gradient(circle at 72% 64%,#ffcf8a 0 6%,transparent 22%),linear-gradient(170deg,#0f1a26 0%,#22303d 45%,#b9682c 80%,#f1b25d 100%)" },
+  { t: "Paper Moons", c: "Haru Saito", type: "music", rt: "3:52", y: "2026", role: "Director, DP, colour", tone: "#3c3242",
+    d: "A one-night performance piece lit by a single moon-sized balloon light and paper lanterns.",
+    g: "radial-gradient(circle at 66% 30%,#ffe2b8 0 9%,transparent 10%),linear-gradient(180deg,#2b1d3a,#5d3c6c 60%,#df8c6a)" },
+  { t: "Hands of the Kiln", c: "Short documentary", type: "doc", rt: "11:20", y: "2025", role: "Director, DP, edit", tone: "#4a3627",
+    d: "A potter's last firing before retirement, filmed over three days at a wood-fired kiln.",
+    g: "radial-gradient(ellipse at 30% 80%,#ffbf6b 0 12%,transparent 40%),linear-gradient(200deg,#2f2219,#6e4327 55%,#c9803b)" },
+  { t: "Tide Line", c: "Nami Swimwear", type: "commercial", rt: "0:30", y: "2025", role: "DP, edit, colour", tone: "#2e4245",
+    d: "Summer campaign shot over two mornings on the coast, cut for web and 9:16 social.",
+    g: "linear-gradient(180deg,#cfe6e2 0%,#6aaab2 46%,#1f5462 52%,#0f2f3a 100%)" },
+  { t: "Static Bloom", c: "The Lanterns", type: "music", rt: "4:10", y: "2025", role: "DP, colour", tone: "#40272f",
+    d: "A band performance shot in one room with shifting red and magenta practicals.",
+    g: "conic-gradient(from 210deg at 32% 60%,#0d0b10,#2c1230,#a52f48,#0d0b10)" },
+  { t: "Morning Ritual", c: "Ame Skincare", type: "commercial", rt: "0:20", y: "2025", role: "DP, colour", tone: "#55463a",
+    d: "Product film built around soft window light and slow, close details.",
+    g: "radial-gradient(ellipse at 25% 30%,#fff3e2 0 14%,transparent 45%),linear-gradient(135deg,#efe0cf,#d9b796 55%,#a87b5c)" },
+  { t: "Last Train Out", c: "Festival short", type: "doc", rt: "7:05", y: "2024", role: "DP, colour", tone: "#2f3a37",
+    d: "The night staff of a rural station on the final week before the line closes.",
+    g: "radial-gradient(circle at 82% 50%,#e8d7a8 0 4%,transparent 18%),linear-gradient(90deg,#0b0f12 0%,#18242c 45%,#33504f 75%,#a4b39d 100%)" },
+  { t: "Ironwood", c: "Ironwood Cycles", type: "commercial", rt: "0:60", y: "2024", role: "Director of photography", tone: "#3d3e2e",
+    d: "A hand-built bicycle followed from the workshop bench to its first ride at dawn.",
+    g: "linear-gradient(160deg,#1c1f1b 0%,#3e4536 40%,#8c7a4e 75%,#d7b46a 100%)" },
+  { t: "Slow Burn", c: "Kei Arata", type: "music", rt: "3:18", y: "2024", role: "Director, DP, edit", tone: "#452b21",
+    d: "A slow-motion narrative video lit almost entirely by flame and a single tungsten source.",
+    g: "radial-gradient(circle at 40% 55%,#ff7a3d 0 7%,transparent 30%),linear-gradient(180deg,#0e0a09,#2a1410 60%,#5b2516)" },
+  { t: "The Night Market", c: "Short documentary", type: "doc", rt: "9:40", y: "2024", role: "DP, edit, colour", tone: "#2e2c3a",
+    d: "Three vendors at a weekend night market, from setup at dusk to pack-down at 2am.",
+    g: "radial-gradient(circle at 20% 40%,#ffd36b 0 5%,transparent 16%),radial-gradient(circle at 75% 35%,#ff6b5a 0 4%,transparent 14%),linear-gradient(180deg,#0c0d16,#1e1b2c 60%,#3c2a2a)" },
+  { t: "First Pour", c: "Kōji Coffee Roasters", type: "vertical", rt: "0:15", y: "2026", role: "DP, edit, colour", fmt: "Reel", tone: "#3d2d21",
+    d: "A one-take pour shot for Instagram Reels, built to loop cleanly.",
+    g: "radial-gradient(ellipse at 50% 70%,#e6a25a 0 10%,transparent 34%),linear-gradient(180deg,#120d0a 0%,#2b1c13 55%,#6b3f22 100%)" },
+  { t: "Golden Hour", c: "Nami Swimwear", type: "vertical", rt: "0:12", y: "2025", role: "DP, edit", fmt: "TikTok", tone: "#47392c",
+    d: "Social cutdown from the Tide Line campaign, reframed and re-edited for 9:16.",
+    g: "radial-gradient(circle at 50% 38%,#ffe0a3 0 7%,transparent 26%),linear-gradient(180deg,#f2c58a 0%,#d98a5a 35%,#2f6470 62%,#10303a 100%)" },
+  { t: "Paper Moons Teaser", c: "Haru Saito", type: "vertical", rt: "0:20", y: "2026", role: "Edit, colour", fmt: "Shorts", tone: "#3a3040",
+    d: "Release teaser cut from the music video for Shorts, Reels and Stories.",
+    g: "radial-gradient(circle at 50% 26%,#ffe2b8 0 11%,transparent 12%),linear-gradient(180deg,#24182f,#4f3460 55%,#d4836a)" },
+  { t: "Wheel Day", c: "Hara Pottery Studio", type: "vertical", rt: "0:30", y: "2025", role: "DP, edit, colour", fmt: "Reel", tone: "#4a3b2e",
+    d: "Studio promo following one bowl from wet clay to the glaze shelf.",
+    g: "radial-gradient(ellipse at 50% 60%,#d9a679 0 14%,transparent 40%),linear-gradient(180deg,#2a2019,#5c4130 55%,#a87b55)" },
+];
+const BASE = "#263A00";
+const reel = { reel: true, t: "Showreel 2026", c: "selected moments", rt: "1:42", tone: "#3e3a30" };
+const TYPE_LABEL = { commercial: "commercial", music: "music video", doc: "documentary", vertical: "vertical" };
+const CATS = {
+  commercial:  { type: "commercial", title: "Commercial" },
+  music:       { type: "music",      title: "Music video" },
+  documentary: { type: "doc",        title: "Documentary" },
+  vertical:    { type: "vertical",   title: "Vertical · 9:16" },
+};
+const HASH_FOR = { commercial: "commercial", music: "music", doc: "documentary", vertical: "vertical" };
+/* Each section runs newest first, by the date the footage was shot (or the year, where no date is known). */
+const dateKey = p => p.date || (p.y ? p.y + "-00-00" : "0000");
+Object.values(CATS).forEach(c => { c.list = projects.filter(p => p.type === c.type || (p.also || []).includes(c.type)).sort((a, b) => dateKey(b).localeCompare(dateKey(a))); c.i = 0; });
+let cat = null;
+const $ = id => document.getElementById(id);
+const setTone = c => document.documentElement.style.setProperty("--bg", c);
+document.querySelectorAll("[data-count]").forEach(el => el.textContent = projects.filter(p => p.type === el.dataset.count || (p.also || []).includes(el.dataset.count)).length);
+
+/* The order shuffles on every visit; the showreel always leads, and projects marked nearEnd sit just before the last clip. */
+const shuffled = projects.filter(p => !p.nearEnd).sort(() => Math.random() - .5);
+shuffled.splice(Math.max(0, shuffled.length - 1), 0, ...projects.filter(p => p.nearEnd));
+
+const ESC = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+function tileHTML(p) {
+  if (p.reel) return `<a class="tile" href="https://vimeo.com" target="_blank" rel="noopener" aria-label="Watch the 2026 showreel">
+      <div class="frame"><canvas id="reel"></canvas><div class="ov"><div><h3>${p.t}</h3><div class="sub">${p.c}</div></div><span class="rt">${p.rt}</span></div></div></a>`;
+  const media = p.video
+    ? `<video src="${p.video}" poster="${p.poster || ""}" muted loop playsinline preload="metadata"${reduce ? "" : " autoplay"}></video>`
+    : `<div class="still" style="--g:${p.g}"></div>`;
+  return `<a class="tile" href="#${HASH_FOR[p.type]}" data-t="${ESC(p.t)}" aria-label="${ESC(p.t)}">
+      <div class="frame">${media}${p.fmt ? `<span class="fmt">9:16 · ${p.fmt}</span>` : ""}
+      <div class="ov"><div><h3>${ESC(p.t)}</h3><div class="sub">${ESC(p.c)}, ${TYPE_LABEL[p.type]}</div></div><span class="rt">${p.rt}</span></div></div></a>`;
+}
+
+/* Justified rows: each row is scaled so its clips fill the width exactly. Several row heights are
+   tried and the one whose last row comes closest to full width wins, so the collage ends square. */
+const isVert = p => p.type === "vertical" || !!p.vert;
+const aspect = p => p.ar || (isVert(p) ? 9 / 16 : 4 / 3);
+function packRows(list, W, gap, H) {
+  const rows = []; let row = [], sum = 0;
+  list.forEach(p => {
+    row.push(p); sum += aspect(p);
+    if (sum * H + gap * (row.length - 1) >= W) { rows.push({ items: row, h: (W - gap * (row.length - 1)) / sum, full: true }); row = []; sum = 0; }
+  });
+  if (row.length) {
+    const fit = (W - gap * (row.length - 1)) / sum;
+    rows.push({ items: row, h: Math.min(fit, H * 1.15), full: fit <= H * 1.15, fill: (sum * H) / W });
+  }
+  return rows;
+}
+function layout(container, list) {
+  const W = container.clientWidth || 900;
+  if (container._w === W) return;
+  container._w = W;
+  const gap = W < 560 ? 3 : 5;
+  const base = W < 560 ? W * .62 : W < 960 ? 230 : 290;
+  let best = null, bestScore = Infinity;
+  for (let f = .8; f <= 1.25; f += .025) {
+    const rows = packRows(list, W, gap, base * f), last = rows[rows.length - 1];
+    const score = (last.full ? 0 : 1 - Math.min(1, last.fill)) + Math.abs(1 - f) * .15;
+    if (score < bestScore) { bestScore = score; best = rows; }
+  }
+  container.innerHTML = "";
+  let y = 0;
+  best.forEach(r => {
+    let x = 0;
+    r.items.forEach(p => {
+      const w = aspect(p) * r.h;
+      const cell = document.createElement("div");
+      cell.className = "cell";
+      /* Grow from the outer edge on the sides and top so enlarged clips stay on the page. Narrow vertical clips grow a little more. */
+      const ox = x < 1 ? "left" : x + w > W - 1 ? "right" : "center", oy = y < 1 ? "top" : "center";
+      cell.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${r.h}px;--ox:${ox};--oy:${oy};--grow:${isVert(p) ? 1.32 : p.ar > 1.5 ? 1.14 : 1.22}`;
+      cell.innerHTML = tileHTML(p);
+      cell.dataset.tone = p.tone;
+      container.appendChild(cell);
+      x += w + gap;
+    });
+    y += r.h + gap;
+  });
+  container.style.height = (y - gap) + "px";
+  container.querySelectorAll(".cell").forEach(cell => {
+    cell.addEventListener("mouseenter", e => { setTone(cell.dataset.tone); ripple(container, e, cell); });
+    const a = cell.firstElementChild;
+    if (a.dataset.t) a.addEventListener("click", () => {
+      const c = CATS[a.getAttribute("href").slice(1)];
+      c.i = Math.max(0, c.list.findIndex(p => p.t === a.dataset.t));
+    });
+  });
+  if (!reduce) container.querySelectorAll("video").forEach(v => { v.muted = true; v.play().catch(() => {}); });
+  if (!container._bound) { container._bound = true; container.addEventListener("mouseleave", () => setTone(BASE)); }
+  if (container.querySelector("#reel")) startReel();
+}
+
+/* Raindrop ripple: a ring spreads from the pointer and each clip is nudged outward, then settles,
+   with a delay that grows with its distance from where the pointer entered. */
+let lastRipple = 0;
+function ripple(container, e, src) {
+  if (reduce) return;
+  const now = performance.now();
+  if (now - lastRipple < 450) return;
+  lastRipple = now;
+  const box = container.getBoundingClientRect();
+  const x = e.clientX - box.left, y = e.clientY - box.top;
+  container.querySelectorAll(".cell").forEach(c => {
+    if (c === src) return;
+    const dx = c.offsetLeft + c.offsetWidth / 2 - x, dy = c.offsetTop + c.offsetHeight / 2 - y;
+    const d = Math.hypot(dx, dy) || 1;
+    if (d > 1500) return;
+    const A = 6 * Math.exp(-d / 420), ux = dx / d * A, uy = dy / d * A, s = 1 - A / 600;
+    c.animate([
+      { transform: "translate(0,0) scale(1)" },
+      { transform: `translate(${ux}px,${uy}px) scale(${s})`, offset: .4 },
+      { transform: "translate(0,0) scale(1)" },
+    ], { duration: 1100, delay: d * .85, easing: "cubic-bezier(.4,0,.2,1)" });
+  });
+}
+
+/* One project at a time, shared by every category */
+function buildIndex() {
+  const c = CATS[cat];
+  $("vw-index").innerHTML = c.list.map((p, n) => `<li><button type="button" data-n="${n}" aria-label="${ESC(p.t)}">${n + 1}</button></li>`).join("");
+  $("vw-index").querySelectorAll("button").forEach(b => b.addEventListener("click", () => go(+b.dataset.n)));
+}
+function showProject(animate = true) {
+  const c = CATS[cat], list = c.list, i = c.i, p = list[i], stage = $("stage");
+  setTone(p.tone);
+  const fill = () => {
+    const isSet = !!p.clips;
+    stage.classList.toggle("set", isSet);
+    $("vw-link").hidden = isSet;
+    $("vw-set").hidden = !isSet;
+    $("vw-watch").hidden = isSet;
+    renderSet(isSet ? p : null);
+    stage.classList.toggle("vert", isVert(p) && !isSet);
+    stage.classList.toggle("wide", p.ar > 1.5);
+    stage.style.setProperty("--ar", p.ar || "");
+    $("vw-frame").classList.toggle("vert", isVert(p));
+    $("vw-frame").style.aspectRatio = p.ar ? String(p.ar) : "";
+    setVideo(isSet ? {} : p);
+    const url = p.video || p.url || "https://vimeo.com";
+    $("vw-link").href = url;
+    $("vw-watch").href = url;
+    $("vw-watch").setAttribute("aria-label", p.video ? "Play with sound" : p.url && p.url.includes("instagram") ? "Play on Instagram" : "Play film");
+    $("vw-watch").title = $("vw-watch").getAttribute("aria-label");
+    $("cat-title").textContent = c.title;
+    $("vw-count").textContent = `${i + 1} of ${list.length}`;
+    $("vw-still").style.setProperty("--g", p.g);
+    $("vw-title").textContent = p.t;
+    $("vw-client").textContent = p.c;
+    $("vw-desc").textContent = p.d;
+    $("vw-meta").textContent = [...new Set([p.fmt, p.y, p.rt, p.role].filter(Boolean))].join("  ·  ");
+    $("vw-link").setAttribute("aria-label", "Watch " + p.t);
+    $("prev").disabled = i === 0;
+    $("next").disabled = i === list.length - 1;
+    $("vw-index").querySelectorAll("button").forEach(b => b.setAttribute("aria-current", +b.dataset.n === i ? "true" : "false"));
+  };
+  if (!animate || reduce) { fill(); return; }
+  stage.classList.add("swapping");
+  setTimeout(() => { fill(); stage.classList.remove("swapping"); }, 300);
+}
+/* Self-hosted clips play muted on a loop as a preview; the play button restarts them with sound and controls. */
+/* Clip sets: every clip plays muted on a loop while it is on screen; tapping one plays it with sound and mutes the rest. */
+let setObserver = null;
+function renderSet(p) {
+  const box = $("vw-set");
+  if (setObserver) { setObserver.disconnect(); setObserver = null; }
+  if (!p) { box.querySelectorAll("video").forEach(v => v.pause()); box.innerHTML = ""; box.dataset.for = ""; return; }
+  if (box.dataset.for === p.t) return;
+  box.dataset.for = p.t;
+  box.scrollLeft = 0;
+  const spk = '<svg class="off" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path d="m11 6 4 4m0-4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><svg class="on" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path d="M11 5.5a3.5 3.5 0 0 1 0 5M12.5 3.5a6 6 0 0 1 0 9" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>';
+  box.innerHTML = p.clips.map((c, n) => `<button class="clip" type="button" aria-label="Clip ${n + 1} of ${p.clips.length}, play with sound">
+      <video src="${c}.mp4" poster="${c}.jpg" muted loop playsinline preload="none"></video>
+      <span class="n">${String(n + 1).padStart(2, "0")}</span><span class="snd">${spk}</span></button>`).join("");
+  const clips = [...box.querySelectorAll(".clip")];
+  clips.forEach(btn => btn.addEventListener("click", () => {
+    const v = btn.querySelector("video"), on = btn.classList.contains("sound");
+    clips.forEach(b => { b.classList.remove("sound"); b.querySelector("video").muted = true; });
+    if (!on) { btn.classList.add("sound"); v.muted = false; v.currentTime = 0; v.play().catch(() => {}); }
+  }));
+  setObserver = new IntersectionObserver(entries => entries.forEach(e => {
+    const v = e.target.querySelector("video");
+    if (e.isIntersecting && !reduce) { v.preload = "auto"; v.play().catch(() => {}); } else if (!e.isIntersecting) v.pause();
+  }), { root: box, threshold: .35 });
+  clips.forEach(b => setObserver.observe(b));
+}
+function setVideo(p) {
+  const v = $("vw-video");
+  $("vw-watch").classList.remove("playing");
+  if (p.video) {
+    if (v.dataset.src !== p.video) { v.src = p.video; v.poster = p.poster || ""; v.dataset.src = p.video; }
+    v.hidden = false; v.muted = true; v.controls = false; v.loop = true;
+    if (!reduce) v.play().catch(() => {});
+  } else if (v.dataset.src) {
+    v.pause(); v.hidden = true; v.removeAttribute("src"); v.dataset.src = ""; v.load();
+  }
+}
+function toggleSound(e) {
+  const p = CATS[cat] && CATS[cat].list[CATS[cat].i];
+  if (!p || !p.video) return;
+  e.preventDefault();
+  const v = $("vw-video"), btn = $("vw-watch");
+  if (e.currentTarget.id === "vw-link" && v.controls) return;
+  if (v.muted || v.paused) {
+    if (v.muted) v.currentTime = 0;
+    v.muted = false; v.controls = true;
+    v.play().catch(() => {});
+    btn.classList.add("playing"); btn.setAttribute("aria-label", "Pause"); btn.title = "Pause";
+  } else {
+    v.pause();
+    btn.classList.remove("playing"); btn.setAttribute("aria-label", "Play with sound"); btn.title = "Play with sound";
+  }
+}
+$("vw-watch").addEventListener("click", toggleSound);
+$("vw-link").addEventListener("click", toggleSound);
+function go(n) {
+  const c = CATS[cat];
+  if (n < 0 || n >= c.list.length || n === c.i) return;
+  c.i = n; showProject();
+}
+$("prev").addEventListener("click", () => go(CATS[cat].i - 1));
+$("next").addEventListener("click", () => go(CATS[cat].i + 1));
+addEventListener("keydown", e => {
+  if ($("v-cat").hidden) return;
+  if (e.key === "ArrowLeft" || e.key === "ArrowUp") { e.preventDefault(); go(CATS[cat].i - 1); }
+  if (e.key === "ArrowRight" || e.key === "ArrowDown") { e.preventDefault(); go(CATS[cat].i + 1); }
+});
+/* Scroll steps through projects when the page itself has nothing to scroll; swipe on touch screens. */
+let wheelAcc = 0, wheelLock = 0;
+addEventListener("wheel", e => {
+  if ($("v-cat").hidden || document.documentElement.scrollHeight > innerHeight + 4 || e.target.closest("#vw-set")) return;
+  const now = performance.now();
+  if (now < wheelLock) return;
+  wheelAcc += e.deltaY;
+  if (Math.abs(wheelAcc) > 60) { go(CATS[cat].i + (wheelAcc > 0 ? 1 : -1)); wheelAcc = 0; wheelLock = now + 900; }
+}, { passive: true });
+let tx = null;
+$("stage").addEventListener("touchstart", e => { tx = e.target.closest("#vw-set") ? null : e.touches[0].clientX; }, { passive: true });
+$("stage").addEventListener("touchend", e => {
+  if (tx === null) return;
+  const dx = e.changedTouches[0].clientX - tx; tx = null;
+  if (Math.abs(dx) > 50) go(CATS[cat].i + (dx < 0 ? 1 : -1));
+}, { passive: true });
+
+/* Views */
+const VIEWS = ["all", "commercial", "music", "documentary", "vertical", "about", "contact"];
+let current = null;
+function render(view) {
+  if (view === "all") layout($("collage-all"), [reel, ...shuffled]);
+  if (CATS[view]) {
+    const changed = cat !== view;
+    cat = view;
+    if (changed) buildIndex();
+    showProject(false);
+  }
+}
+function route() {
+  let h = location.hash.slice(1);
+  if (!VIEWS.includes(h)) h = "all";
+  $("v-all").hidden = h !== "all";
+  $("v-cat").hidden = !CATS[h];
+  $("v-about").hidden = h !== "about";
+  $("v-contact").hidden = h !== "contact";
+  document.querySelectorAll(".group a").forEach(a => a.dataset.v === h ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  if (current !== h) scrollTo(0, 0);
+  current = h;
+  if (!CATS[h]) { setTone(BASE); $("vw-video").pause(); renderSet(null); }
+  playServices(h === "about");
+  render(h);
+}
+addEventListener("hashchange", route);
+let rsz;
+addEventListener("resize", () => { clearTimeout(rsz); rsz = setTimeout(() => { if (current === "all") render("all"); sizeReel(); }, 150); });
+
+/* Contact form: posts to FormSubmit, which forwards each message to the email below.
+   The first message ever sent triggers a one-time activation email to that inbox. */
+const FORM_TO = "mythnlvideo@gmail.com";
+$("cform").addEventListener("submit", async e => {
+  e.preventDefault();
+  const f = e.currentTarget, status = $("cf-status"), btn = $("cf-send");
+  const need = [["cf-name", v => v.trim()], ["cf-email", v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())], ["cf-msg", v => v.trim().length > 4]];
+  let firstBad = null;
+  need.forEach(([id, ok]) => { const el = $(id), good = ok(el.value); el.closest(".field").classList.toggle("bad", !good); if (!good && !firstBad) firstBad = el; });
+  status.className = "form-status";
+  if (firstBad) { status.classList.add("err"); status.textContent = "Add your name, a valid email and a short message, then send again."; firstBad.focus(); return; }
+  if ($("cf-hp").value) return;
+  btn.disabled = true; btn.textContent = "Sending…"; status.textContent = "";
+  const data = {
+    name: $("cf-name").value.trim(), email: $("cf-email").value.trim(), project: $("cf-type").value,
+    dates: $("cf-dates").value.trim() || "Not given", budget: $("cf-budget").value.trim() || "Not given",
+    message: $("cf-msg").value.trim(),
+    _subject: `New enquiry: ${$("cf-type").value} from ${$("cf-name").value.trim()}`,
+    _replyto: $("cf-email").value.trim(), _template: "table", _captcha: "false",
+  };
+  try {
+    const r = await fetch(`https://formsubmit.co/ajax/${FORM_TO}`, { method: "POST", headers: { "Content-Type": "application/json", Accept: "application/json" }, body: JSON.stringify(data) });
+    const j = await r.json().catch(() => ({}));
+    if (!r.ok || String(j.success) === "false") throw new Error(j.message || "Send failed");
+    f.reset();
+    status.classList.add("ok"); status.textContent = "Thanks, your message was sent. I'll reply within two working days.";
+  } catch (err) {
+    status.classList.add("err"); status.textContent = `The message couldn't be sent from here. Please email ${FORM_TO} instead.`;
+  } finally { btn.disabled = false; btn.textContent = "Send message"; }
+});
+["cf-name", "cf-email", "cf-msg"].forEach(id => $(id).addEventListener("input", () => $(id).closest(".field").classList.remove("bad")));
+
+/* Service cards: pick a background loop from each card's section (a real clip where one exists, otherwise that
+   section's colour), so adding footage to a section updates its card automatically. */
+function fillServices() {
+  const used = new Set();
+  document.querySelectorAll(".svc[data-cat]").forEach(card => {
+    const key = card.dataset.cat;
+    const pool = key === "all" ? projects : (CATS[key] ? CATS[key].list : []);
+    const vid = pool.find(p => p.video && !used.has(p.video)) || null;
+    const box = card.querySelector(".svc-bg");
+    if (vid) {
+      used.add(vid.video);
+      box.innerHTML = `<video src="${vid.video}" poster="${vid.poster || ""}" muted loop playsinline preload="metadata"></video>`;
+    } else {
+      const p = pool[0];
+      box.innerHTML = `<div class="grad" style="--g:${p ? p.g : "#2a2622"}"></div>`;
+    }
+    card.addEventListener("click", () => { if (CATS[key]) CATS[key].i = 0; });
+  });
+}
+function playServices(on) {
+  document.querySelectorAll(".svc-bg video").forEach(v => { v.muted = true; if (on && !reduce) v.play().catch(() => {}); else v.pause(); });
+}
+
+/* Copy email */
+const copyBtn = $("copy"), emailEl = $("email");
+copyBtn.addEventListener("click", () => {
+  const done = () => { copyBtn.textContent = "copied"; setTimeout(() => copyBtn.textContent = "copy email", 1600); };
+  const select = () => { const r = document.createRange(); r.selectNodeContents(emailEl); const s = getSelection(); s.removeAllRanges(); s.addRange(r); copyBtn.textContent = "press ctrl+c to copy"; };
+  try { navigator.clipboard.writeText(emailEl.textContent).then(done, select); } catch (e) { select(); }
+});
+
+/* Showreel tile: a slow, drifting dusk landscape */
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+let cv, ctx, running = false;
+const t0 = performance.now();
+function sizeReel() {
+  if (!cv) return;
+  const r = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2);
+  if (r.width) { cv.width = r.width * d; cv.height = r.height * d; if (reduce) draw(performance.now()); }
+}
+function startReel() {
+  cv = $("reel"); ctx = cv.getContext("2d"); sizeReel();
+  if (!running) { running = true; requestAnimationFrame(draw); }
+}
+function draw(now) {
+  const t = (now - t0) / 1000, w = cv && cv.width, h = cv && cv.height;
+  if (w && h && !$("v-all").hidden) {
+    const sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, "#2a3236"); sky.addColorStop(.48, "#6a6152"); sky.addColorStop(.72, "#c58a50"); sky.addColorStop(1, "#33241a");
+    ctx.fillStyle = sky; ctx.fillRect(0, 0, w, h);
+    const sx = w * (.62 + Math.sin(t * .04) * .06), sy = h * .68;
+    const sun = ctx.createRadialGradient(sx, sy, 0, sx, sy, h * .85);
+    sun.addColorStop(0, "rgba(255,226,175,.9)"); sun.addColorStop(.09, "rgba(245,180,110,.5)"); sun.addColorStop(1, "rgba(240,150,80,0)");
+    ctx.fillStyle = sun; ctx.fillRect(0, 0, w, h);
+    for (let l = 0; l < 3; l++) {
+      ctx.beginPath(); ctx.moveTo(0, h);
+      const base = h * (.7 + l * .09), amp = h * (.06 - l * .014), off = t * (.02 + l * .035);
+      for (let x = 0; x <= w; x += w / 60) ctx.lineTo(x, base - Math.sin(x / w * (3 + l * 2) + off + l) * amp - Math.sin(x / w * 11 + l) * amp * .3);
+      ctx.lineTo(w, h); ctx.closePath(); ctx.fillStyle = ["#2e261c", "#1e1912", "#100d09"][l]; ctx.fill();
+    }
+  }
+  if (!reduce) requestAnimationFrame(draw); else running = false;
+}
+
+fillServices();
+route();
+</script>
+</body>
+</html>
