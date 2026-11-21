@@ -138,6 +138,7 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 .yt-link { font-size: 13px; margin-left: 6px; }
 .frame img.thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--ease); }
 .tile:hover img.thumb, .tile:focus-visible img.thumb { transform: scale(1.04); }
+#vw-frame.ig { aspect-ratio: 4 / 4.1 !important; background: #fff; }
 .frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: #000; }
 .swapping .stage-head, .swapping .pic, .swapping .stage-foot, .swapping .desc { opacity: 0; transform: translateY(6px); }
 .stage-head, .pic, .stage-foot, .desc { transition: opacity .4s var(--ease), transform .4s var(--ease); }
@@ -380,6 +381,11 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 /* Placeholder projects: replace titles, clients, links and stills with your own.
    tone = the muted page colour shown while that project is on screen. */
 const projects = [
+  { t: "In My Darkest Hours", c: "Saïna", type: "music", rt: "0:31", y: "2026", date: "2026-09-24", role: "Cinematographer", tone: "#2c2428",
+    instagram: "DdrmBV9qIzM",
+    d: "A music video for Saïna's 'In My Darkest Hours', out now on all platforms.",
+    credits: "Directed by Lara Kafali · Shot by Myth Shah",
+    g: "radial-gradient(ellipse at 60% 40%,#5a3a44 0 10%,transparent 45%),linear-gradient(170deg,#0e0b0d,#2a1d22 60%,#4a2e36)" },
   { t: "HOTEL 555", c: "Saïna", type: "music", rt: "12:48", y: "2026", date: "2026-11-13", role: "Editor", tone: "#3a2a33",
     ar: 16 / 9, youtube: "hhWkz4wwNSw", thumb: "https://i.ytimg.com/vi/hhWkz4wwNSw/maxresdefault.jpg",
     d: "Short film and 5-track EP. An exploration of escapism, asking what happens when the things we turn to for comfort begin to keep us from ourselves, the liminal space between death & rebirth, dreams & transformation, where guests can step beyond the boundaries of their everyday selves.",
@@ -609,10 +615,10 @@ function showProject(animate = true) {
     $("vw-frame").style.aspectRatio = p.ar ? String(p.ar) : "";
     setVideo(isSet ? {} : p);
     setYouTube(p);
-    const url = p.video || (p.youtube ? `https://www.youtube.com/watch?v=${p.youtube}` : "") || p.url || "https://vimeo.com";
+    const url = p.video || watchUrl(p) || p.url || "https://vimeo.com";
     $("vw-link").href = url;
     $("vw-watch").href = url;
-    $("vw-watch").setAttribute("aria-label", p.youtube ? "Play film" : p.video ? "Play with sound" : p.url && p.url.includes("instagram") ? "Play on Instagram" : "Play film");
+    $("vw-watch").setAttribute("aria-label", embedUrl(p) ? "Play film" : p.video ? "Play with sound" : p.url && p.url.includes("instagram") ? "Play on Instagram" : "Play film");
     $("vw-watch").title = $("vw-watch").getAttribute("aria-label");
     $("cat-title").textContent = c.title;
     $("vw-count").textContent = `${i + 1} of ${list.length}`;
@@ -671,23 +677,30 @@ function setVideo(p) {
 }
 /* YouTube films: show the thumbnail, and load YouTube's player into the frame when play is pressed.
    (Embedded players only work on the hosted site; the "watch on YouTube" link always works.) */
+const watchUrl = p => p.youtube ? `https://www.youtube.com/watch?v=${p.youtube}` : p.instagram ? `https://www.instagram.com/reel/${p.instagram}/` : "";
+const embedUrl = p => p.youtube ? `https://www.youtube-nocookie.com/embed/${p.youtube}?autoplay=1&rel=0&modestbranding=1` : p.instagram ? `https://www.instagram.com/reel/${p.instagram}/embed/` : "";
 function setYouTube(p) {
   const frame = $("vw-frame"), img = $("vw-thumb");
   const old = frame.querySelector("iframe"); if (old) old.remove();
-  $("vw-yt").hidden = !p.youtube;
-  if (p.youtube) {
-    $("vw-yt").href = `https://www.youtube.com/watch?v=${p.youtube}`;
-    img.hidden = false; img.src = p.thumb || ""; img.onerror = () => { img.hidden = true; };
-  } else { img.hidden = true; img.removeAttribute("src"); }
+  frame.classList.remove("ig");
+  const watch = watchUrl(p);
+  $("vw-yt").hidden = !watch;
+  if (watch) {
+    $("vw-yt").href = watch;
+    $("vw-yt").textContent = p.instagram ? "watch on Instagram ↗" : "watch on YouTube ↗";
+  }
+  if (p.thumb) { img.hidden = false; img.src = p.thumb; img.onerror = () => { img.hidden = true; }; }
+  else { img.hidden = true; img.removeAttribute("src"); }
 }
 function playYouTube(e) {
   const p = CATS[cat] && CATS[cat].list[CATS[cat].i];
-  if (!p || !p.youtube) return;
+  if (!p || !embedUrl(p)) return;
   e.preventDefault();
   const frame = $("vw-frame");
   if (frame.querySelector("iframe")) return;
+  if (p.instagram) frame.classList.add("ig");
   const f = document.createElement("iframe");
-  f.src = `https://www.youtube-nocookie.com/embed/${p.youtube}?autoplay=1&rel=0&modestbranding=1`;
+  f.src = embedUrl(p);
   f.title = p.t; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
   frame.appendChild(f);
 }
