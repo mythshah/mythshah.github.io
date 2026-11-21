@@ -136,6 +136,12 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 .ico.play:hover { transform: scale(1.06); }
 .meta-line { font: 400 12px var(--type); letter-spacing: .06em; color: var(--soft); font-variant-numeric: tabular-nums; }
 .desc { grid-area: desc; margin: 18px 0 0; max-width: 52ch; color: var(--soft); }
+.desc.long { max-width: 62ch; }
+.desc p { margin: 0 0 12px; }
+.desc h4 { font: 500 13px/1.4 var(--body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink); margin: 20px 0 8px; }
+.desc ul { margin: 0 0 14px; padding-left: 1.2em; display: grid; gap: 6px; }
+.desc a, .credits-line a { color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--soft); transition: border-color .2s; overflow-wrap: anywhere; }
+.desc a:hover, .credits-line a:hover { border-bottom-color: var(--ink); }
 .credits-line { margin: 12px 0 0; max-width: 60ch; font-size: 13px; line-height: 1.6; color: var(--soft); opacity: .85; }
 .yt-link { font-size: 13px; margin-left: 6px; }
 .frame img.thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--ease); }
@@ -289,7 +295,7 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
         </div>
         <span class="meta-line" id="vw-meta"></span>
       </div>
-      <p class="desc" id="vw-desc"></p>
+      <div class="desc" id="vw-desc"></div>
       <p class="credits-line" id="vw-credits" hidden></p>
     </div>
   </div>
@@ -364,6 +370,20 @@ const projects = [
     video: "media/lwa/lwa1.mp4", poster: "media/lwa/lwa1.jpg",
     d: "A short campaign film for the Landworkers' Alliance. Agroecological farms and local food webs are resilient in the face of climate breakdown, but new entrant landworkers need to be able to live on their land, and many face an uphill battle for planning permission. As councils across England revise their Local Plans, the campaign urges them to make clear provision for small farms, growers and the homes they need on site.",
     credits: "Filmmaker Jack Tierney, with the help of Myth Shah and Rudi Thwiates",
+    creditsHtml: 'Filmmaker <a href="https://jackktierney.com" target="_blank" rel="noopener">Jack Tierney</a>, with the help of Myth Shah and Rudi Thwiates · For the <a href="https://landworkersalliance.org.uk" target="_blank" rel="noopener">Landworkers\' Alliance</a>',
+    html: `<p><strong>Support landworkers to live on their land: feed into your Local Plans in England.</strong></p>
+      <p>Agroecological farms and local food webs are resilient in the face of climate breakdown, global shocks and cyberattacks. But in order to set up and run secure and viable farms, new entrant landworkers need to be able to live on their land.</p>
+      <p>Unfortunately, many landworkers face an uphill battle trying to gain the necessary planning permissions to do so.</p>
+      <p>Across England, local councils are now revising their Local Plans: the documents local authorities will use to assess planning applications for the next 15 years. This is an opportunity to intervene.</p>
+      <p>Drawing on provisions in the updated <a href="https://www.gov.uk/government/publications/national-planning-policy-framework--2" target="_blank" rel="noopener">National Planning Policy Framework</a>, along with evidence and stories that prove the need to support small farms and local food systems, the campaign urges local planning authorities to consider the needs of small-scale farmers, growers and landworkers in their Local Plans, and to allow clear provision for essential on-farm infrastructure, including homes.</p>
+      <h4>What you can do</h4>
+      <ul>
+        <li>Check when your Local Plan is up for review. <a href="https://www.gov.uk/find-local-council" target="_blank" rel="noopener">Find your local council</a> and look for its Local Plan page.</li>
+        <li>Write to your local planning authority to feed into your Local Plan, using the Landworkers' Alliance fact sheet and template letter.</li>
+        <li>Ask others who are interested to respond as well, as multiple or collective responses carry more weight, or organise a local meeting of interested people to meet with the planners.</li>
+        <li>Organise a screening of this short film in your local community centre or village hall to help raise awareness of the campaign.</li>
+      </ul>
+      <p>All the links and resources, including the fact sheet and template letter, are on the Landworkers' Alliance <a href="https://landworkersalliance.org.uk/planning" target="_blank" rel="noopener">Planning and Housing page</a>.</p>`,
     g: "#22281c" },
   { t: "Seoul, Reset Asia Tour", c: "Haruna", type: "music", rt: "0:23", y: "2026", date: "2026-11-17", role: "Cinematographer", tone: "#3a1a1c",
     video: "media/haruna-seoul.mp4", poster: "media/haruna-seoul.jpg",
@@ -583,9 +603,11 @@ function showProject(animate = true) {
     $("vw-still").style.setProperty("--g", p.g);
     $("vw-title").textContent = p.t;
     $("vw-client").textContent = p.c;
-    $("vw-desc").textContent = p.d;
+    /* html descriptions are written by hand in this file; everything else is plain text */
+    if (p.html) $("vw-desc").innerHTML = p.html; else $("vw-desc").textContent = p.d;
+    $("vw-desc").classList.toggle("long", !!p.html);
     $("vw-credits").hidden = !p.credits;
-    $("vw-credits").textContent = p.credits || "";
+    if (p.creditsHtml) $("vw-credits").innerHTML = p.creditsHtml; else $("vw-credits").textContent = p.credits || "";
     $("vw-meta").textContent = [...new Set([p.fmt, p.y, p.rt, p.role].filter(Boolean))].join("  ·  ");
     $("vw-link").setAttribute("aria-label", "Watch " + p.t);
     $("prev").disabled = i === 0;
