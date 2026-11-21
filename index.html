@@ -134,6 +134,11 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 .ico.play:hover { transform: scale(1.06); }
 .meta-line { font: 400 12px var(--type); letter-spacing: .06em; color: var(--soft); font-variant-numeric: tabular-nums; }
 .desc { grid-area: desc; margin: 18px 0 0; max-width: 52ch; color: var(--soft); }
+.credits-line { margin: 12px 0 0; max-width: 60ch; font-size: 13px; line-height: 1.6; color: var(--soft); opacity: .85; }
+.yt-link { font-size: 13px; margin-left: 6px; }
+.frame img.thumb { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .9s var(--ease); }
+.tile:hover img.thumb, .tile:focus-visible img.thumb { transform: scale(1.04); }
+.frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; background: #000; }
 .swapping .stage-head, .swapping .pic, .swapping .stage-foot, .swapping .desc { opacity: 0; transform: translateY(6px); }
 .stage-head, .pic, .stage-foot, .desc { transition: opacity .4s var(--ease), transform .4s var(--ease); }
 
@@ -272,17 +277,19 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
     </div>
     <div class="stage" id="stage">
       <div class="stage-head"><h1 id="vw-title"></h1><span class="bar" aria-hidden="true">|</span><span class="client" id="vw-client"></span></div>
-      <a class="pic mat" id="vw-link" href="https://vimeo.com" target="_blank" rel="noopener"><div class="frame" id="vw-frame"><div class="still" id="vw-still"></div><video id="vw-video" playsinline muted loop preload="metadata" hidden></video></div></a>
+      <a class="pic mat" id="vw-link" href="https://vimeo.com" target="_blank" rel="noopener"><div class="frame" id="vw-frame"><div class="still" id="vw-still"></div><img class="thumb" id="vw-thumb" alt="" hidden><video id="vw-video" playsinline muted loop preload="metadata" hidden></video></div></a>
       <div class="clipset" id="vw-set" hidden aria-label="Clips in this project"></div>
       <div class="stage-foot">
         <div class="links">
           <a class="ico play" id="vw-watch" href="https://vimeo.com" target="_blank" rel="noopener" aria-label="Play film" title="Play film"><svg class="i-play" viewBox="0 0 16 16" aria-hidden="true"><path d="M3 1.5v13l11-6.5z" fill="currentColor"/></svg><svg class="i-pause" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2h3v12H4zM9 2h3v12H9z" fill="currentColor"/></svg></a>
           <button class="ico" type="button" id="prev" aria-label="Previous project" title="Previous"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <button class="ico" type="button" id="next" aria-label="Next project" title="Next"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m6 3 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <a class="lnk yt-link" id="vw-yt" href="#" target="_blank" rel="noopener" hidden>watch on YouTube ↗</a>
         </div>
         <span class="meta-line" id="vw-meta"></span>
       </div>
       <p class="desc" id="vw-desc"></p>
+      <p class="credits-line" id="vw-credits" hidden></p>
     </div>
   </div>
 
@@ -373,6 +380,11 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 /* Placeholder projects: replace titles, clients, links and stills with your own.
    tone = the muted page colour shown while that project is on screen. */
 const projects = [
+  { t: "HOTEL 555", c: "Saïna", type: "music", rt: "12:48", y: "2026", date: "2026-11-13", role: "Editor", tone: "#3a2a33",
+    ar: 16 / 9, youtube: "hhWkz4wwNSw", thumb: "https://i.ytimg.com/vi/hhWkz4wwNSw/maxresdefault.jpg",
+    d: "Short film and 5-track EP. An exploration of escapism, asking what happens when the things we turn to for comfort begin to keep us from ourselves, the liminal space between death & rebirth, dreams & transformation, where guests can step beyond the boundaries of their everyday selves.",
+    credits: "Written & directed by Saïna & Calvin Ma · Cinematography Brett Bushell · Edit Myth Shah · Trailer edit Shiona Penrake · Colour Anna Bursukova · Wardrobe Nuha Hussain",
+    g: "linear-gradient(160deg,#2a1a24,#4a2f3c 55%,#7a4a52)" },
   { t: "Autumn/Winter Edit", c: "David Gandy Wellwear", type: "commercial", rt: "0:59", y: "2026", date: "2026-10-02", tone: "#3a4140",
     ar: 2048 / 858, video: "media/dgw-campaign.mp4", poster: "media/dgw-campaign.jpg",
     d: "A widescreen Autumn/Winter campaign film for David Gandy Wellwear, the menswear brand, shot on an overcast coast: dunes, beach huts and quiet knitwear against a grey sea.",
@@ -482,6 +494,8 @@ function tileHTML(p) {
       <div class="frame"><canvas id="reel"></canvas><div class="ov"><div><h3>${p.t}</h3><div class="sub">${p.c}</div></div><span class="rt">${p.rt}</span></div></div></a>`;
   const media = p.video
     ? `<video src="${p.video}" poster="${p.poster || ""}" muted loop playsinline preload="metadata"${reduce ? "" : " autoplay"}></video>`
+    : p.thumb
+    ? `<div class="still" style="--g:${p.g}"></div><img class="thumb" src="${p.thumb}" alt="" loading="lazy" onerror="this.remove()">`
     : `<div class="still" style="--g:${p.g}"></div>`;
   return `<a class="tile" href="#${HASH_FOR[p.type]}" data-t="${ESC(p.t)}" aria-label="${ESC(p.t)}">
       <div class="frame">${media}${p.fmt ? `<span class="fmt">9:16 · ${p.fmt}</span>` : ""}
@@ -594,10 +608,11 @@ function showProject(animate = true) {
     $("vw-frame").classList.toggle("vert", isVert(p));
     $("vw-frame").style.aspectRatio = p.ar ? String(p.ar) : "";
     setVideo(isSet ? {} : p);
-    const url = p.video || p.url || "https://vimeo.com";
+    setYouTube(p);
+    const url = p.video || (p.youtube ? `https://www.youtube.com/watch?v=${p.youtube}` : "") || p.url || "https://vimeo.com";
     $("vw-link").href = url;
     $("vw-watch").href = url;
-    $("vw-watch").setAttribute("aria-label", p.video ? "Play with sound" : p.url && p.url.includes("instagram") ? "Play on Instagram" : "Play film");
+    $("vw-watch").setAttribute("aria-label", p.youtube ? "Play film" : p.video ? "Play with sound" : p.url && p.url.includes("instagram") ? "Play on Instagram" : "Play film");
     $("vw-watch").title = $("vw-watch").getAttribute("aria-label");
     $("cat-title").textContent = c.title;
     $("vw-count").textContent = `${i + 1} of ${list.length}`;
@@ -605,6 +620,8 @@ function showProject(animate = true) {
     $("vw-title").textContent = p.t;
     $("vw-client").textContent = p.c;
     $("vw-desc").textContent = p.d;
+    $("vw-credits").hidden = !p.credits;
+    $("vw-credits").textContent = p.credits || "";
     $("vw-meta").textContent = [...new Set([p.fmt, p.y, p.rt, p.role].filter(Boolean))].join("  ·  ");
     $("vw-link").setAttribute("aria-label", "Watch " + p.t);
     $("prev").disabled = i === 0;
@@ -652,6 +669,30 @@ function setVideo(p) {
     v.pause(); v.hidden = true; v.removeAttribute("src"); v.dataset.src = ""; v.load();
   }
 }
+/* YouTube films: show the thumbnail, and load YouTube's player into the frame when play is pressed.
+   (Embedded players only work on the hosted site; the "watch on YouTube" link always works.) */
+function setYouTube(p) {
+  const frame = $("vw-frame"), img = $("vw-thumb");
+  const old = frame.querySelector("iframe"); if (old) old.remove();
+  $("vw-yt").hidden = !p.youtube;
+  if (p.youtube) {
+    $("vw-yt").href = `https://www.youtube.com/watch?v=${p.youtube}`;
+    img.hidden = false; img.src = p.thumb || ""; img.onerror = () => { img.hidden = true; };
+  } else { img.hidden = true; img.removeAttribute("src"); }
+}
+function playYouTube(e) {
+  const p = CATS[cat] && CATS[cat].list[CATS[cat].i];
+  if (!p || !p.youtube) return;
+  e.preventDefault();
+  const frame = $("vw-frame");
+  if (frame.querySelector("iframe")) return;
+  const f = document.createElement("iframe");
+  f.src = `https://www.youtube-nocookie.com/embed/${p.youtube}?autoplay=1&rel=0&modestbranding=1`;
+  f.title = p.t; f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen"; f.allowFullscreen = true;
+  frame.appendChild(f);
+}
+$("vw-watch").addEventListener("click", playYouTube);
+$("vw-link").addEventListener("click", playYouTube);
 function toggleSound(e) {
   const p = CATS[cat] && CATS[cat].list[CATS[cat].i];
   if (!p || !p.video) return;
