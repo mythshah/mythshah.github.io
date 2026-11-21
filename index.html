@@ -500,8 +500,12 @@ const $ = id => document.getElementById(id);
 const setTone = c => document.documentElement.style.setProperty("--bg", c);
 document.querySelectorAll("[data-count]").forEach(el => el.textContent = projects.filter(p => p.type === el.dataset.count || (p.also || []).includes(el.dataset.count)).length);
 
-/* The order shuffles on every visit; the showreel always leads, and projects marked nearEnd sit just before the last clip. */
-const shuffled = projects.filter(p => !p.nearEnd).sort(() => Math.random() - .5);
+/* All page order: the showreel leads, then your work in the order it was added to the site (first added first).
+   Placeholder projects follow, and projects marked nearEnd sit just before the last clip. Add new titles to the end of this list. */
+const UPLOAD_ORDER = ["Instagram Reel", "Purple", "Hawes & Curtis", "Behind the Scenes", "Garden Party", "Arnold Circus", "Chorus",
+  "Autumn/Winter Edit", "HOTEL 555", "In My Darkest Hours", "In My Darkest Hours Pt. 2", "Seoul, Reset Asia Tour"];
+const rank = p => { const i = UPLOAD_ORDER.indexOf(p.t); return i < 0 ? UPLOAD_ORDER.length : i; };
+const shuffled = projects.filter(p => !p.nearEnd).map((p, n) => [p, n]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(x => x[0]);
 shuffled.splice(Math.max(0, shuffled.length - 1), 0, ...projects.filter(p => p.nearEnd));
 
 const ESC = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
