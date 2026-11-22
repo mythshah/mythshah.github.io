@@ -383,6 +383,11 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 /* Placeholder projects: replace titles, clients, links and stills with your own.
    tone = the muted page colour shown while that project is on screen. */
 const projects = [
+  { t: "Chair", c: "LOCK OFF", type: "music", top: true, rt: "3:03", y: "2026", date: "2026-11-11", role: "Cinematographer & talent", tone: "#2b2a2c",
+    ar: 16 / 9, youtube: "q0dNBH_iqMM", thumb: "https://i.ytimg.com/vi/q0dNBH_iqMM/maxresdefault.jpg",
+    d: "Music video for LOCK OFF's 'Chair'.",
+    credits: "Directed by Sam Suthers · Cinematography and on-screen talent Myth Shah · Music written and produced by Jonny Aky & Angus Brown",
+    g: "linear-gradient(160deg,#19181a,#2f2d31 55%,#4a474d)" },
   { t: "Whiplash", c: "LOCK OFF", type: "music", top: true, rt: "2:00", y: "2026", date: "2026-11-06", role: "Cinematographer", tone: "#2c2b2a",
     ar: 16 / 9, youtube: "MV-s-ZGqVyg", thumb: "https://i.ytimg.com/vi/MV-s-ZGqVyg/maxresdefault.jpg",
     d: "Music video for LOCK OFF's 'Whiplash'.",
@@ -497,7 +502,7 @@ Object.entries(CATS).forEach(([k, c]) => { const card = document.querySelector(`
 /* All page order: the showreel leads, then your work newest upload first.
    Placeholder projects follow, and projects marked nearEnd sit just before the last clip. Add new titles to the end of this list. */
 const UPLOAD_ORDER = ["Purple", "Hawes & Curtis", "Behind the Scenes", "Garden Party", "Arnold Circus", "Chorus",
-  "Autumn/Winter Edit", "HOTEL 555", "In My Darkest Hours", "In My Darkest Hours Pt. 2", "Seoul, Reset Asia Tour", "Planning & Housing", "Armed Warrior", "Whiplash"];
+  "Autumn/Winter Edit", "HOTEL 555", "In My Darkest Hours", "In My Darkest Hours Pt. 2", "Seoul, Reset Asia Tour", "Planning & Housing", "Armed Warrior", "Whiplash", "Chair"];
 /* newest upload first */
 const rank = p => { const i = UPLOAD_ORDER.indexOf(p.t); return i < 0 ? UPLOAD_ORDER.length : UPLOAD_ORDER.length - 1 - i; };
 const shuffled = projects.filter(p => !p.nearEnd).map((p, n) => [p, n]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(x => x[0]);
