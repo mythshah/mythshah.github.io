@@ -470,9 +470,9 @@ const projects = [
     video: "media/hc-lookbook/d1v1.mp4", poster: "media/hc-lookbook/d1v1.jpg",
     d: "Thirty-nine vertical edits from two days of the Hawes & Curtis lookbook: linen tailoring and summer separates against a warm studio backdrop. Tap a clip to hear it.",
     g: "#3a3027" },
-  { t: "Purple", c: "SEKA", type: "commercial", rt: "0:23", y: "2026", date: "2026-03-30", role: "DP, edit, colour", tone: "#2b2534",
+  { t: "SEKA Aero", c: "Bikesoup", type: "commercial", rt: "0:23", y: "2026", date: "2026-03-30", role: "DP, edit, colour", tone: "#2b2534",
     ar: 1920 / 712, video: "media/seka-purple.mp4", poster: "media/seka-purple.jpg",
-    d: "A short film for SEKA's purple frame, shot in the shop with the riders and staff around it.",
+    d: "A short film for Bikesoup, made for both the SEKA aero bike and the shop itself. Bikesoup began as an online marketplace for premium and pre-loved bikes, and now has a two-floor flagship store at Westfield London in White City, with a showroom of premium and bespoke builds, a same-day servicing workshop and a café. The film follows the purple SEKA aero bike through the shop, among the riders and staff.",
     g: "#17141c" },
 ];
 const BASE = "#263A00";
@@ -501,7 +501,7 @@ Object.entries(CATS).forEach(([k, c]) => { const card = document.querySelector(`
 
 /* All page order: the showreel leads, then your work newest upload first.
    Placeholder projects follow, and projects marked nearEnd sit just before the last clip. Add new titles to the end of this list. */
-const UPLOAD_ORDER = ["Purple", "Hawes & Curtis", "Behind the Scenes", "Garden Party", "Arnold Circus", "Chorus",
+const UPLOAD_ORDER = ["SEKA Aero", "Hawes & Curtis", "Behind the Scenes", "Garden Party", "Arnold Circus", "Chorus",
   "Autumn/Winter Edit", "HOTEL 555", "In My Darkest Hours", "In My Darkest Hours Pt. 2", "Seoul, Reset Asia Tour", "Planning & Housing", "Armed Warrior", "Whiplash", "Chair"];
 /* newest upload first */
 const rank = p => { const i = UPLOAD_ORDER.indexOf(p.t); return i < 0 ? UPLOAD_ORDER.length : UPLOAD_ORDER.length - 1 - i; };
