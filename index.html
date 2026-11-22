@@ -383,6 +383,11 @@ h2 { font: 400 30px/1.1 var(--display); margin: 6px 0 0; text-wrap: balance; }
 /* Placeholder projects: replace titles, clients, links and stills with your own.
    tone = the muted page colour shown while that project is on screen. */
 const projects = [
+  { t: "Armed Warrior", c: "LOCK OFF", type: "music", top: true, rt: "2:53", y: "2026", date: "2026-11-04", role: "Cinematographer & talent", tone: "#2a2a2e",
+    ar: 16 / 9, youtube: "LZtx7LZf6z4", thumb: "https://i.ytimg.com/vi/LZtx7LZf6z4/maxresdefault.jpg",
+    d: "Music video for LOCK OFF's 'Armed Warrior'.",
+    credits: "Cinematography and on-screen talent: Myth Shah",
+    g: "linear-gradient(160deg,#18181c,#2e2e36 55%,#4a4a52)" },
   { t: "Planning & Housing", c: "Landworkers' Alliance", type: "doc", y: "2026", date: "2026-11-07", tone: "#3d4630",
     rt: "1:29", ar: 4 / 3, clipAr: 4 / 3,
     /* A set: add more films to this list as media/lwa/lwa2, lwa3 … */
@@ -472,7 +477,8 @@ const CATS = {
 const HASH_FOR = { commercial: "commercial", music: "music", doc: "documentary", vertical: "vertical" };
 /* Each section runs newest first, by the date the footage was shot (or the year, where no date is known). */
 const dateKey = p => p.date || (p.y ? p.y + "-00-00" : "0000");
-Object.values(CATS).forEach(c => { c.list = projects.filter(p => p.type === c.type || (p.also || []).includes(c.type)).sort((a, b) => dateKey(b).localeCompare(dateKey(a))); c.i = 0; });
+/* projects marked top: true lead their section regardless of date */
+Object.values(CATS).forEach(c => { c.list = projects.filter(p => p.type === c.type || (p.also || []).includes(c.type)).sort((a, b) => (b.top ? 1 : 0) - (a.top ? 1 : 0) || dateKey(b).localeCompare(dateKey(a))); c.i = 0; });
 let cat = null;
 const $ = id => document.getElementById(id);
 const setTone = c => document.documentElement.style.setProperty("--bg", c);
@@ -486,7 +492,7 @@ Object.entries(CATS).forEach(([k, c]) => { const card = document.querySelector(`
 /* All page order: the showreel leads, then your work newest upload first.
    Placeholder projects follow, and projects marked nearEnd sit just before the last clip. Add new titles to the end of this list. */
 const UPLOAD_ORDER = ["Purple", "Hawes & Curtis", "Behind the Scenes", "Garden Party", "Arnold Circus", "Chorus",
-  "Autumn/Winter Edit", "HOTEL 555", "In My Darkest Hours", "In My Darkest Hours Pt. 2", "Seoul, Reset Asia Tour", "Planning & Housing"];
+  "Autumn/Winter Edit", "HOTEL 555", "In My Darkest Hours", "In My Darkest Hours Pt. 2", "Seoul, Reset Asia Tour", "Planning & Housing", "Armed Warrior"];
 /* newest upload first */
 const rank = p => { const i = UPLOAD_ORDER.indexOf(p.t); return i < 0 ? UPLOAD_ORDER.length : UPLOAD_ORDER.length - 1 - i; };
 const shuffled = projects.filter(p => !p.nearEnd).map((p, n) => [p, n]).sort((a, b) => rank(a[0]) - rank(b[0]) || a[1] - b[1]).map(x => x[0]);
